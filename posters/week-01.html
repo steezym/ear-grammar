@@ -7,43 +7,43 @@
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
-  body { width: 1254px; height: 1254px; background: #fdf9f1; font-family: "Nunito", sans-serif; color: #24324a; overflow: hidden; position: relative; }
+  body { width: 1254px; height: 1254px; background: #fbf6ec; font-family: "Nunito", sans-serif; color: #172c5e; overflow: hidden; position: relative; }
   .hand { font-family: "Patrick Hand", "Nunito", cursive; }
   header { position: relative; height: 150px; text-align: center; padding-top: 18px; }
-  .wk { position: absolute; left: 30px; top: 26px; background: #f6c1cc; font-size: 50px; padding: 4px 26px; border-radius: 22px; transform: rotate(-4deg); font-weight: 900; color: #1f2d5c; }
-  h1 { margin: 0; font-size: 82px; font-weight: 900; color: #1f2d5c; line-height: 1; }
+  .wk { position: absolute; left: 30px; top: 26px; background: #cf2a2a; font-size: 50px; padding: 4px 26px; border-radius: 22px; transform: rotate(-4deg); font-weight: 900; color: #fff; }
+  h1 { margin: 0; font-size: 82px; font-weight: 900; color: #1e459f; line-height: 1; }
   .sub { font-size: 30px; margin-top: 8px; }
-  .chip { position: absolute; right: 30px; top: 30px; background: #d6e2fb; padding: 10px 22px; border-radius: 20px; transform: rotate(-3deg); font-size: 28px; text-align: center; line-height: 1.15; }
+  .chip { position: absolute; right: 30px; top: 30px; background: #fabd32; padding: 10px 22px; border-radius: 20px; transform: rotate(-3deg); font-size: 28px; text-align: center; line-height: 1.15; }
   .grid { display: grid; grid-template-columns: 650px 1fr; gap: 20px; padding: 0 26px; }
   .panel { border-radius: 22px; padding: 16px 20px; }
   .ttl { display: inline-block; font-size: 34px; font-weight: 900; padding: 2px 18px; border-radius: 14px; margin-bottom: 8px; }
-  .words { background: #fff4d9; }
-  .words .ttl { background: #fde3a0; }
+  .words { background: #fdf0cf; }
+  .words .ttl { background: #fabd32; }
   .wgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 8px; text-align: center; }
   .wgrid div { font-size: 22px; font-weight: 700; line-height: 1.15; }
   .wgrid .e { display: block; font-size: 58px; line-height: 1.2; }
-  .build { background: #eef3fc; grid-row: span 2; }
-  .build .ttl { background: #c7d6f7; }
+  .build { background: #e8edf8; grid-row: span 2; }
+  .build .ttl { background: #1e459f; color: #fff; }
   .pat { border-radius: 14px; margin: 9px 0; padding: 8px 14px 10px; }
   .pat h3 { margin: 0 0 4px; font-size: 25px; font-weight: 900; display: flex; align-items: center; gap: 10px; }
   .pat .n { width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-size: 21px; flex: none; }
   .pat ul { margin: 0; padding-left: 52px; font-size: 21px; line-height: 1.35; }
-  .p1 { background: #fde4ea; } .p1 .n { background: #e07a92; }
-  .p2 { background: #e0f4e6; } .p2 .n { background: #4fae72; }
-  .p3 { background: #ece4fa; } .p3 .n { background: #8f73c9; }
-  .p4 { background: #dfeafc; } .p4 .n { background: #5b84cf; }
-  .p5 { background: #fde6d6; } .p5 .n { background: #e48a55; }
-  .warn { background: #fdecef; }
-  .warn .ttl { background: #f8c6d1; font-size: 30px; }
+  .p1 { background: #ffffff; } .p1 .n { background: #1e459f; }
+  .p2 { background: #ffffff; } .p2 .n { background: #cf2a2a; }
+  .p3 { background: #ffffff; } .p3 .n { background: #e0a20f; }
+  .p4 { background: #ffffff; } .p4 .n { background: #1e459f; }
+  .p5 { background: #ffffff; } .p5 .n { background: #cf2a2a; }
+  .warn { background: #f8dcdc; }
+  .warn .ttl { background: #cf2a2a; color: #fff; font-size: 30px; }
   .warn p { margin: 4px 0; font-size: 22px; }
-  .x { color: #c62c49; text-decoration: line-through; }
-  .ok { color: #1d8a4a; font-weight: 900; }
-  .tryit { margin: 20px 26px 0; height: 268px; background: #e8f6ec; border-radius: 22px; padding: 14px 22px; display: flex; gap: 24px; align-items: center; }
-  .tryit .ttl { background: #bfe7cb; font-size: 40px; margin: 0; flex: none; }
+  .x { color: #cf2a2a; text-decoration: line-through; }
+  .ok { color: #1e459f; font-weight: 900; }
+  .tryit { margin: 20px 26px 0; height: 268px; background: #e1dcca; border-radius: 22px; padding: 14px 22px; display: flex; gap: 24px; align-items: center; }
+  .tryit .ttl { background: #1e459f; color: #fff; font-size: 40px; margin: 0; flex: none; }
   .tryit .qs { font-size: 28px; line-height: 1.6; }
   .tryit .qr { margin-left: auto; text-align: center; font-size: 23px; line-height: 1.5; font-weight: 800; background: #fff; border-radius: 16px; padding: 10px 16px; }
-  .tryit .qr b { display: block; font-size: 27px; color: #4a5f9c; }
-  footer { position: absolute; bottom: 0; left: 0; right: 0; height: 66px; background: #dfe9fb; text-align: center; font-size: 36px; line-height: 66px; color: #1f2d5c; }
+  .tryit .qr b { display: block; font-size: 27px; color: #cf2a2a; }
+  footer { position: absolute; bottom: 0; left: 0; right: 0; height: 66px; background: #1e459f; text-align: center; font-size: 36px; line-height: 66px; color: #fabd32; }
 </style>
 </head>
 <body>
