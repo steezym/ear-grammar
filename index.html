@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAR Grammar</title>
+<meta name="description" content="English Assistance Rote – Grammar. Materi dan latihan interaktif mingguan (25 weeks).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main class="wrap">
+  <div class="hero">
+    <span class="tag">25 Weeks</span>
+    <h1>EAR Grammar</h1>
+    <p>English Assistance Rote: materi dan latihan interaktif setiap minggu.</p>
+    <span class="focus">Pilih minggu, baca materinya, lalu langsung practice!</span>
+  </div>
+
+  <div class="weeks" id="weeks"></div>
+
+  <footer>Small steps, big progress ✨</footer>
+</main>
+
+<script>
+// Add a week: set `live: true` once its folder (week-XX/index.html) exists.
+const WEEKS = [
+  { t: "My Hobbies", d: "Like / Love / Enjoy + V-ing", live: true },
+  { t: "Holidays and Travel", d: "Present simple, past simple, present perfect" },
+  { t: "Free Time", d: "Past & present continuous, present perfect continuous" },
+  { t: "Fame", d: "Past perfect, used to / would" },
+  { t: "Education", d: "Will and going to" },
+  { t: "The Internet", d: "Present continuous for future, future perfect" },
+  { t: "The Family", d: "Word order and punctuation" },
+  { t: "The Environment", d: "Subject–verb agreement, determiners" },
+  { t: "Food", d: "Countable and uncountable nouns" },
+  { t: "Employment and Finance", d: "A, an, the, and no article" },
+  { t: "Youth", d: "Linking words and signposting" },
+  { t: "People and Places", d: "Comparatives and superlatives" },
+  { t: "Crime", d: "Present modals: can, may, must, should" },
+  { t: "The Planet", d: "Past modal verbs" },
+  { t: "Globalization", d: "Zero, first, second, third conditionals" },
+  { t: "Culture and Modern Society", d: "Reported speech" },
+  { t: "Health and Fitness", d: "Pronouns and reference words" },
+  { t: "Fashion", d: "Paragraph and text organization" },
+  { t: "Film and Entertainment", d: "The passive voice" },
+  { t: "Wildlife", d: "Relative clauses" },
+  { t: "Men and Women", d: "Noun phrases" },
+  { t: "Coming soon", d: "" },
+  { t: "Coming soon", d: "" },
+  { t: "Coming soon", d: "" },
+  { t: "Coming soon", d: "" }
+];
+
+const host = document.getElementById("weeks");
+WEEKS.forEach((w, i) => {
+  const n = String(i + 1).padStart(2, "0");
+  const a = document.createElement("a");
+  a.className = "week " + (w.live ? "live" : "soon");
+  if (w.live) a.href = "week-" + n + "/";
+  a.innerHTML =
+    '<div class="n">WEEK ' + (i + 1) +
+    (w.live ? '<span class="badge live">OPEN</span>' : '<span class="badge soon">SOON</span>') + "</div>" +
+    '<div class="t">' + w.t + "</div>" +
+    '<div class="d">' + w.d + "</div>";
+  host.append(a);
+});
+</script>
+</body>
+</html>
