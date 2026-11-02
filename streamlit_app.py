@@ -114,20 +114,6 @@ def home():
 def week(n):
     folder = released[n]
     st.iframe(embed((folder / "index.html").read_text(encoding="utf-8")), height=900)
-
-    pdfs = sorted(folder.glob("*.pdf"))
-    posters = sorted(folder.glob("*.png"))
-    if pdfs or posters:
-        st.markdown("### 📥 Download")
-        cols = st.columns(2)
-        for pdf in pdfs:
-            cols[0].download_button("📄 Materi + Worksheet (PDF)", pdf.read_bytes(),
-                                    file_name=pdf.name, mime="application/pdf")
-        for png in posters:
-            cols[1].download_button("🖼️ Poster (PNG)", png.read_bytes(),
-                                    file_name=png.name, mime="image/png")
-        for png in posters:
-            st.image(str(png), caption=f"Poster Week {n}", width=560)
     st.button("← Kembali ke silabus", on_click=go, args=(HOME,))
 
 
