@@ -1,6 +1,7 @@
 # EAR Grammar
 
 Materi dan latihan interaktif **English Assistance Rote – Grammar** (25 weeks).
+Semua halaman selalu memakai palet EAR (navy #1E459F, merah #CF2A2A, kuning #FABD32, beige #E1DCCA), juga di HP yang memakai mode gelap.
 Setiap minggu punya satu halaman web berisi materi, latihan yang langsung dicek (skor tersimpan di HP masing-masing), latihan IELTS Speaking, poster PNG, dan PDF worksheet.
 
 Referensi utama: *Grammar for IELTS* (Collins), plus materi tambahan.

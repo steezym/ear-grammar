@@ -20,29 +20,7 @@
   --bad: #cf2a2a;
   --bad-bg: #f8dcdc;
   --radius: 14px;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f1a33;
-    --card: #17254a;
-    --ink: #efe9da;
-    --muted: #b3ad9c;
-    --navy: #9fb7ee;
-    --accent: #3f66c4;
-    --red: #e85a5a;
-    --gold: #fabd32;
-    --line: #2b3a63;
-    --yellow: #5a4512;
-    --blue: #22396f;
-    --green: #3f3b2e;
-    --purple: #1f3263;
-    --orange: #4a3a14;
-    --pink: #5a2224;
-    --ok: #9fb7ee;
-    --ok-bg: #22396f;
-    --bad: #ff7b7b;
-    --bad-bg: #4a1f22;
-  }
+  color-scheme: light; /* always use the brand palette, even on dark-mode devices */
 }
 
 * { box-sizing: border-box; }
