@@ -12,7 +12,8 @@ Referensi utama: *Grammar for IELTS* (Collins), plus materi tambahan.
 index.html            daftar semua week
 assets/style.css      tampilan bersama
 assets/quiz.js        mesin quiz bersama (choice, fill, fix, order, pattern, write)
-streamlit_app.py      aplikasi Streamlit (menampilkan semua folder week-XX)
+streamlit_app.py      aplikasi Streamlit: halaman silabus + week yang sudah dibuka
+syllabus.json         isi silabus 25 week (week tanpa folder tampil terkunci)
 .streamlit/config.toml  tema warna Streamlit
 week-01/index.html    materi + soal Week 1
 week-01/week1-poster.png
