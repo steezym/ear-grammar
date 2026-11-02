@@ -171,3 +171,7 @@ footer { text-align: center; color: var(--muted); font-size: 14px; margin-top: 2
 .badge { display: inline-block; font-size: 12px; font-weight: 800; padding: 1px 8px; border-radius: 999px; margin-left: 6px; }
 .badge.live { background: var(--gold); color: #172c5e; }
 .badge.soon { background: var(--line); }
+
+/* ---------- embedded in the Streamlit app ---------- */
+body.embed .topbar a.home,
+body.embed [data-standalone] { display: none; }

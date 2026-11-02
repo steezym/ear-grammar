@@ -222,6 +222,12 @@
   }
   updateScore();
 
+  // In-page links scroll smoothly (also works when the page sits in an iframe srcdoc).
+  document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
+    const target = document.querySelector(a.getAttribute("href"));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: "smooth" }); }
+  }));
+
   const resetBtn = document.querySelector("[data-reset]");
   if (resetBtn) resetBtn.addEventListener("click", () => {
     if (!confirm("Hapus semua jawaban dan mulai dari awal?")) return;
