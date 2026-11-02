@@ -2,7 +2,7 @@
 
 Materi dan latihan interaktif **English Assistance Rote – Grammar** (25 weeks).
 Semua halaman selalu memakai palet EAR (navy #1E459F, merah #CF2A2A, kuning #FABD32, beige #E1DCCA), juga di HP yang memakai mode gelap.
-Setiap minggu punya satu halaman web berisi materi, latihan yang langsung dicek (skor tersimpan di HP masing-masing), latihan IELTS Speaking, poster PNG, dan PDF worksheet.
+Setiap minggu punya satu halaman web berisi materi, latihan yang langsung dicek (skor tersimpan di HP masing-masing), latihan sentence building, poster PNG, dan PDF worksheet.
 
 Referensi utama: *Grammar for IELTS* (Collins), plus materi tambahan.
 
@@ -11,7 +11,7 @@ Referensi utama: *Grammar for IELTS* (Collins), plus materi tambahan.
 ```
 index.html            daftar semua week
 assets/style.css      tampilan bersama
-assets/quiz.js        mesin quiz bersama (choice, fill, fix, order, speak, write)
+assets/quiz.js        mesin quiz bersama (choice, fill, fix, order, pattern, write)
 week-01/index.html    materi + soal Week 1
 week-01/week1-poster.png
 week-01/Week1_My_Hobbies_Materi.pdf

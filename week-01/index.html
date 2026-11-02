@@ -9,7 +9,7 @@
 <meta name="description" content="Week 1: My Hobbies – Like / Love / Enjoy + V-ing. Materi dan latihan interaktif.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=3">
 </head>
 <body>
 
@@ -31,7 +31,7 @@
       <a href="#grammar">🧩 Grammar</a>
       <a href="#spelling">✏️ -ing Rules</a>
       <a href="#practice">🎯 Practice</a>
-      <a href="#speaking">🗣️ Speaking</a>
+      <a href="#building">🧱 Sentence Building</a>
       <a href="#result">🏆 Result</a>
     </nav>
   </div>
@@ -104,7 +104,7 @@
     <div class="note tip">
       <b>💡 Like + V-ing vs. Like + to V</b>: dua-duanya benar, <i>I like swimming</i> / <i>I like to swim</i>.
       Tapi <b>would like</b> (= ingin) selalu + <b>to V</b>: <i>I would like to try surfing.</i><br>
-      <b>📘 IELTS tip</b> (<i>Grammar for IELTS</i>, Unit 2): <i>like, love, want, know</i> adalah <b>stative verbs</b>,
+      <b>📘 Grammar tip</b> (<i>Grammar for IELTS</i>, Unit 2): <i>like, love, want, know</i> adalah <b>stative verbs</b>,
       jadi biasanya dipakai dalam simple tense: "I like studying Spanish in my free time", bukan "I am liking…".
     </div>
   </section>
@@ -142,14 +142,14 @@
   </section>
 
   <section class="card">
-    <h2 class="label g">D. Sentence building</h2>
+    <h2 class="label g">D. Put the words in order</h2>
     <p class="hint">Ketuk kata-kata sesuai urutan yang benar. Ketuk lagi untuk mengembalikan kata.</p>
     <div data-quiz="d"></div>
   </section>
 
-  <section class="card" id="speaking">
-    <h2 class="label b">E. IELTS Speaking Part 1</h2>
-    <p class="hint">Jawab langsung, lalu tambahkan <b>alasan</b> dan <b>contoh</b> (2–3 kalimat). Latihan ucapkan keras-keras, lalu tulis jawabanmu dan cek.</p>
+  <section class="card" id="building">
+    <h2 class="label b">E. Sentence building: look and write</h2>
+    <p class="hint">Lihat gambar dan orangnya, lalu tulis <b>satu kalimat</b> memakai pola yang diberikan. Perhatikan subjeknya (he/she → kata kerja + <b>s</b>).</p>
     <div data-quiz="e"></div>
   </section>
 
@@ -182,8 +182,6 @@
 const VING = /\b(like|likes|love|loves|enjoy|enjoys|adore|hate|hates|mind|stand|into|on|of|in|at)\s+\w+ing\b/i;
 const NO_ENJOY_TO = ["Tidak ada \"enjoy to …\"", /\benjoys?\s+to\s+\w+/i, true];
 const NO_CONT = ["Tidak pakai \"am liking / am loving\"", /\b(am|is|are|'m|'re|'s)\s+(liking|loving|hating)\b/i, true];
-const REASON = ["Ada alasan (because / so / as)", /\b(because|so|as|since)\b/i];
-const LONG = ["Minimal ±15 kata", (t) => t.trim().split(/\s+/).length >= 15];
 
 window.WEEK = {
   id: "week-01",
@@ -219,18 +217,24 @@ window.WEEK = {
       { type: "order", words: ["to try", "would", "I", "surfing", "like", "someday"], answer: ["I would like to try surfing someday", "Someday I would like to try surfing"], why: "would like + to V." }
     ]},
     { id: "e", items: [
-      { type: "speak", q: "What do you like doing in your free time?",
-        model: "Well, I <mark>really enjoy playing</mark> the guitar. I <mark>usually practise</mark> for about an hour after dinner <mark>because</mark> it helps me relax after a long day. I'm also <mark>into watching</mark> cooking videos on YouTube.",
-        checks: [["Pakai like / love / enjoy + V-ing", VING], REASON, NO_ENJOY_TO, NO_CONT, LONG] },
-      { type: "speak", q: "Is there a hobby you would like to try in the future?",
-        model: "Yes, definitely. I <mark>would like to try</mark> scuba diving. I've always <mark>loved swimming</mark>, <mark>so</mark> I think exploring coral reefs would be amazing.",
-        checks: [["Pakai would like to + V", /\bwould like to\s+\w+/i], ["Tidak ada \"would like + V-ing\"", /\bwould like\s+\w+ing\b/i, true], REASON, LONG] },
-      { type: "speak", q: "Is there anything you don't like doing at the weekend?",
-        model: "Honestly, I <mark>can't stand doing</mark> housework on Sundays. I <mark>don't mind cleaning</mark> my room, but ironing clothes is so boring, <mark>so</mark> I usually do it on Friday night.",
-        checks: [["Pakai don't like / hate / can't stand + V-ing", /\b(don't like|do not like|hate|can't stand|cannot stand|dislike|don't enjoy)\s+\w+ing\b/i], REASON, NO_ENJOY_TO, LONG] },
-      { type: "speak", q: "Did you have the same hobbies when you were a child?",
-        model: "Not really. When I was a child, I <mark>loved playing</mark> hide-and-seek with my neighbours. Now I <mark>prefer reading</mark> <mark>because</mark> I don't have much free time.",
-        checks: [["Pakai past tense (was / loved / used to …)", /\b(was|were|used to|did|loved|liked|enjoyed|played)\b/i], ["Pakai V-ing setelah verb of preference", VING], LONG] }
+      { type: "pattern", q: "📚 Rina · reading", pattern: "like / love / enjoy + V-ing",
+        test: /\brina\s+(really\s+)?(likes|loves|enjoys|adores)\s+reading\b/i,
+        model: "Rina enjoys reading.", why: "Subjek Rina (she) → enjoys / likes / loves + reading." },
+      { type: "pattern", q: "⚽ Budi · play football · on Sundays", pattern: "usually / often / sometimes + V",
+        test: /\bbudi\s+(always|usually|often|sometimes)\s+plays\s+football\b/i,
+        model: "Budi usually plays football on Sundays.", why: "Adverb sebelum kata kerja; Budi (he) → plays." },
+      { type: "pattern", q: "🎨 Sari · painting", pattern: "be interested in / be good at + V-ing",
+        test: /\bsari(\s+is|'s)\s+(really\s+|very\s+)?(interested in|good at)\s+painting\b/i,
+        model: "Sari is good at painting.", why: "be (is) + interested in / good at + V-ing." },
+      { type: "pattern", q: "📷 My brother · take photos", pattern: "be into / be keen on / be fond of + V-ing",
+        test: /\bmy brother(\s+is|'s)\s+(really\s+|very\s+)?(into|keen on|fond of)\s+taking photos\b/i,
+        model: "My brother is into taking photos.", why: "take → taking (silent e dihapus)." },
+      { type: "pattern", q: "🧽 I · wash the dishes", pattern: "don't mind / hate / can't stand + V-ing",
+        test: /\bi\s+(don't mind|do not mind|hate|can't stand|cannot stand|don't like|dislike)\s+washing the dishes\b/i,
+        model: "I don't mind washing the dishes.", why: "don't mind / hate / can't stand + V-ing." },
+      { type: "pattern", q: "🎸 I · learn the guitar · someday", pattern: "would like + to V",
+        test: /\bi\s*(would|'d)\s+like\s+to\s+learn\s+(to play\s+)?the guitar\b/i,
+        model: "I would like to learn the guitar someday.", why: "would like + to V (bukan V-ing)." }
     ]},
     { id: "f", items: [
       { type: "write", count: 3, q: "Tulis 3 kalimat tentang hobimu (satu kalimat per baris).",
@@ -244,6 +248,6 @@ window.WEEK = {
   ]
 };
 </script>
-<script src="../assets/quiz.js"></script>
+<script src="../assets/quiz.js?v=3"></script>
 </body>
 </html>

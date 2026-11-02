@@ -8,7 +8,7 @@
  *   fill   : { q (use ___ for the blank), answer: [accepted..], why }
  *   fix    : { q (wrong sentence), answer: [accepted corrected sentences..], why }
  *   order  : { words: [..], answer: [accepted sentences..], why }
- *   speak  : { q, model (may contain <mark>), checks: [[label, test, isMistake?]..] }
+ *   pattern: { q (prompt), pattern (hint), test: RegExp the sentence must match, model, why }
  *   write  : { q, count, checks: [[label, test, isMistake?]..] }
  *   (test is a RegExp or a function(text) -> bool; isMistake=true means a hit is bad)
  */
@@ -145,38 +145,32 @@
   function runChecks(text, checks, list) {
     list.innerHTML = "";
     checks.forEach(([label, re, bad]) => {
-      const hit = typeof re === "function" ? re(text) : re.test(text);
+      const t = text.replace(/[’‘]/g, "'");
+      const hit = typeof re === "function" ? re(t) : re.test(t);
       const good = bad ? !hit : hit;
       list.append(el("li", { class: good ? "done" : "miss" }, (good ? "✔ " : "✘ ") + label));
     });
   }
 
-  function speakText(text) {
-    if (!("speechSynthesis" in window)) return;
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-GB";
-    u.rate = 0.92;
-    speechSynthesis.speak(u);
-  }
+  function renderPattern(item, key, n) {
+    const fb = el("div", { class: "feedback" });
+    const input = el("input", { type: "text", placeholder: "tulis satu kalimat…", autocomplete: "off", spellcheck: "false" });
+    const btn = el("button", { class: "primary", onclick: check }, "Cek");
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") check(); });
 
-  function renderSpeak(item, key, n) {
-    const model = el("div", { class: "model", html: "🗣️ " + item.model });
-    model.hidden = true;
-    const ta = el("textarea", { placeholder: "Tulis jawabanmu (atau latihan ucapkan dulu, lalu tulis di sini)…" });
-    const list = el("ul", { class: "checklist" });
-    ta.value = state[key + ":v"] || "";
-    ta.addEventListener("input", () => { state[key + ":v"] = ta.value; save(); });
-    const plain = model.textContent.replace(/^🗣️\s*/, "");
+    function check(_, silent) {
+      if (!input.value.trim()) return;
+      const ok = item.test.test(input.value.replace(/[’‘]/g, "'"));
+      input.className = ok ? "right" : "wrong";
+      feedback(fb, ok, item, ok ? "" : item.model);
+      if (!silent) { state[key + ":v"] = input.value; record(key, ok); }
+    }
+    if (state[key + ":v"]) { input.value = state[key + ":v"]; check(null, true); }
     return el("div", { class: "ex" },
       el("div", { class: "qtext" }, el("span", { class: "num" }, n + "."), item.q),
-      el("div", { class: "fillrow" },
-        el("button", { onclick: () => speakText(item.q) }, "🔊 Dengar soal"),
-        el("button", { onclick: () => { model.hidden = !model.hidden; } }, "👀 Contoh jawaban"),
-        el("button", { onclick: () => speakText(plain) }, "🔊 Dengar contoh")),
-      model, ta,
-      el("div", { class: "fillrow" }, el("button", { class: "primary", onclick: () => runChecks(ta.value, item.checks, list) }, "Cek jawaban")),
-      list);
+      el("div", { class: "hint", style: "margin:2px 0 0" }, "Pola: ", el("b", {}, item.pattern)),
+      el("div", { class: "fillrow" }, input, btn),
+      fb);
   }
 
   function renderWrite(item, key) {
@@ -204,9 +198,9 @@
       else if (item.type === "fill") node = renderInput(item, key, n, "ketik jawaban…");
       else if (item.type === "fix") node = renderInput(item, key, n, "tulis kalimat yang benar…");
       else if (item.type === "order") node = renderOrder(item, key, n);
-      else if (item.type === "speak") node = renderSpeak(item, key, n);
+      else if (item.type === "pattern") node = renderPattern(item, key, n);
       else if (item.type === "write") node = renderWrite(item, key);
-      if (["choice", "fill", "fix", "order"].includes(item.type)) graded.push(key);
+      if (["choice", "fill", "fix", "order", "pattern"].includes(item.type)) graded.push(key);
       host.append(node);
     });
   });
