@@ -244,7 +244,7 @@
     "service-not-allowed": "Mikrofon belum diizinkan oleh browser. Pakai Google Chrome atau Microsoft Edge.",
     "no-speech": "Tidak ada suara yang terdengar. Ketuk 🎤 lalu langsung bicara, lebih dekat ke mikrofon.",
     "audio-capture": "Mikrofon tidak ditemukan. Pastikan mikrofon terpasang dan tidak dipakai aplikasi lain.",
-    "network": "Pengenalan suara butuh internet. Cek koneksi lalu coba lagi."
+    "network": "Layanan pengenalan suara tidak bisa dihubungi. Pastikan internet aktif dan pakai Google Chrome atau Microsoft Edge (Brave, Opera, dan Firefox tidak didukung)."
   };
 
   // Toggle listening on `btn`; onText(text, done, error) receives the live transcript.
@@ -252,6 +252,10 @@
     if (active) {
       if (active.btn !== btn) active.next = () => listen(btn, opts);  // switch to this button after the old one stops
       active.rec.stop();
+      return;
+    }
+    if (navigator.brave) {  // Brave exposes the API but blocks Google's speech service ("network" error)
+      opts.onText("", true, "Browser Brave tidak mendukung pengenalan suara. Buka halaman ini di Google Chrome atau Microsoft Edge.");
       return;
     }
     if (!Recognition) {
