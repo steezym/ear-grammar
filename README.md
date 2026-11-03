@@ -1,11 +1,11 @@
 # EAR – English Assistance Rote
 
-Materi dan latihan interaktif EAR. Saat ini ada dua kelas, masing-masing dengan aplikasi Streamlit sendiri:
+Materi dan latihan interaktif EAR dalam **satu aplikasi Streamlit**: https://ear-grammar.streamlit.app
 
-| Kelas | Main file | Folder materi | Link |
-|---|---|---|---|
-| 📘 Grammar | `streamlit_app.py` | `./week-XX/` | https://ear-grammar.streamlit.app |
-| 🗣️ Speaking (101 American English Idioms) | `speaking_app.py` | `speaking/week-XX/` | (isi setelah deploy) |
+| Kelas | Folder materi | Link langsung |
+|---|---|---|
+| 📘 Grammar | `./week-XX/` | https://ear-grammar.streamlit.app/?kelas=grammar |
+| 🗣️ Speaking (101 American English Idioms) | `speaking/week-XX/` | https://ear-grammar.streamlit.app/?kelas=speaking |
 
 Writing dan Listening: coming soon (atur di `tracks.json`).
 
@@ -20,11 +20,10 @@ Referensi utama: *Grammar for IELTS* (Collins), plus materi tambahan.
 index.html            daftar semua week
 assets/style.css      tampilan bersama
 assets/quiz.js        mesin quiz bersama (choice, fill, fix, order, pattern, write)
-ear_app.py            kode Streamlit bersama (silabus, week terkunci, daftar kelas)
-streamlit_app.py      aplikasi Grammar
-speaking_app.py       aplikasi Speaking
+ear_app.py            kode aplikasi Streamlit (pilihan kelas, silabus, week terkunci)
+streamlit_app.py      file utama Streamlit
 speaking/             silabus + materi speaking (week-XX/)
-tracks.json           daftar kelas EAR dan link-nya
+tracks.json           daftar kelas EAR (aktif / coming soon)
 syllabus.json         isi silabus 25 week (week tanpa folder tampil terkunci)
 .streamlit/config.toml  tema warna Streamlit
 week-01/index.html    materi + soal Week 1

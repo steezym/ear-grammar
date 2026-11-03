@@ -1,6 +1,8 @@
 [
-  {"id": "grammar", "name": "Grammar", "icon": "📘", "url": "https://ear-grammar.streamlit.app"},
-  {"id": "speaking", "name": "Speaking", "icon": "🗣️", "url": ""},
-  {"id": "writing", "name": "Writing", "icon": "✍️", "url": "", "soon": true},
-  {"id": "listening", "name": "Listening", "icon": "🎧", "url": "", "soon": true}
+  {"id": "grammar", "name": "Grammar", "icon": "📘", "folder": ".",
+   "subtitle": "English Assistance Rote: silabus grammar dan latihan interaktif setiap minggu."},
+  {"id": "speaking", "name": "Speaking", "icon": "🗣️", "folder": "speaking",
+   "subtitle": "English Assistance Rote: idiom dan latihan speaking setiap minggu (101 American English Idioms)."},
+  {"id": "writing", "name": "Writing", "icon": "✍️", "soon": true},
+  {"id": "listening", "name": "Listening", "icon": "🎧", "soon": true}
 ]

@@ -1,10 +1,8 @@
-"""EAR Grammar — Streamlit app (https://ear-grammar.streamlit.app).
+"""EAR – English Assistance Rote (https://ear-grammar.streamlit.app).
 
-Shows the grammar syllabus; a week opens once its folder week-XX/ exists.
-To release a new week: add week-02/, week-03/, ... and push.
+One app for every class (Grammar, Speaking, ...); see tracks.json.
+To release a new week: add week-XX/ (Grammar) or speaking/week-XX/ (Speaking) and push.
 """
-from ear_app import run
+from ear_app import app
 
-run("grammar", "EAR Grammar",
-    "English Assistance Rote: silabus grammar dan latihan interaktif setiap minggu.",
-    folder=".")
+app()
