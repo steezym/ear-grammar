@@ -39,14 +39,15 @@ STYLE = """
   [class*="st-key-locked-"] { background: #F4EFE3; opacity: .72; }
   /* class picker as pills; selectors cover both older and newer Streamlit radio markup */
   .st-key-kelas, .st-key-kelas [data-testid="stRadio"] { width: 100% !important; }
-  .st-key-kelas [role="radiogroup"], .st-key-kelas [role="radiogroup"] > div:not([data-testid]) {
-    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; }
+  .st-key-kelas [role="radiogroup"] { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; }
+  .st-key-kelas [role="radiogroup"] > div:not([data-testid]) { display: contents; }
   .st-key-kelas label:has(input[type="radio"]) { background: #fff; border: 1.5px solid #E1DCCA; border-radius: 999px;
     padding: 6px 18px !important; margin: 0 !important; cursor: pointer; }
   .st-key-kelas label:has(input[type="radio"]:checked) { background: #1E459F; border-color: #1E459F; }
   .st-key-kelas label:has(input[type="radio"]:checked) p { color: #fff !important; }
   .st-key-kelas label:has(input[type="radio"]) p { font-weight: 800; font-size: 16px; margin: 0; }
-  .st-key-kelas label div:has(+ [data-testid="stMarkdownContainer"]) { display: none !important; }
+  .st-key-kelas label div:has(+ [data-testid="stMarkdownContainer"]),
+  .st-key-kelas [role="radiogroup"] > label > div:first-child { display: none !important; }
   .soon { text-align: center; color: #8a8576; font-size: 14px; margin: 4px 0 6px; }
   .soon span { display: inline-block; border: 1px dashed #c9c2ab; border-radius: 999px; padding: 2px 12px; margin: 2px; }
 </style>
