@@ -186,3 +186,21 @@ body.embed [data-standalone] { display: none; }
 .idiom .ex { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 8px; font-size: 15px; }
 .roleplay { background: var(--yellow); border-radius: 12px; padding: 12px 14px; }
 .roleplay ol { margin: 6px 0 0; padding-left: 20px; }
+
+/* ---------- voice picker + microphone practice ---------- */
+.voicebar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; margin-top: 10px; }
+.voicebar:empty { display: none; }
+select { font: inherit; font-size: 14px; color: var(--ink); background: var(--card); border: 1.5px solid var(--line);
+         border-radius: 10px; padding: 5px 8px; max-width: 100%; }
+button.mic { background: var(--red); border-color: var(--red); color: #fff; font-weight: 700; }
+button.rec { background: var(--red); border-color: var(--red); color: #fff; animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(207, 42, 42, .45); } 50% { box-shadow: 0 0 0 8px rgba(207, 42, 42, 0); } }
+.practice-result { margin-top: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 14.5px; }
+.practice-result .score { font-weight: 800; }
+.practice-result .score.ok { color: var(--ok); }
+.practice-result .score.bad, .practice-result .bad { color: var(--bad); }
+.practice-result .heard { color: var(--muted); margin: 2px 0 4px; }
+.practice-result .why { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.w-ok { color: var(--ok); font-weight: 700; }
+.w-miss { color: var(--bad); font-weight: 700; text-decoration: underline wavy; }
+.idiom .name button + button { margin-left: 0; }

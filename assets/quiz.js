@@ -186,14 +186,138 @@
       list);
   }
 
+  /* ---------- voice: text-to-speech with the most natural English voice on the device ---------- */
+
+  const prefs = { voice: "", rate: "0.95" };
+  try { Object.assign(prefs, JSON.parse(localStorage.getItem("ear-voice")) || {}); } catch (e) { /* storage blocked */ }
+  let voices = [];
+
+  function voiceRank(v) {
+    let s = 0;
+    if (/natural|neural|online/i.test(v.name)) s += 40;  // Edge / Windows neural voices
+    if (/google/i.test(v.name)) s += 25;                 // Chrome / Android voices
+    if (/aria|jenny|ava|samantha|allison|emma|guy|andrew/i.test(v.name)) s += 10;
+    if (/en[-_]US/i.test(v.lang)) s += 8; else if (/en[-_]GB/i.test(v.lang)) s += 4;
+    return s;
+  }
+  function currentVoice() {
+    return voices.find((v) => v.name === prefs.voice) || voices[0];
+  }
+  function loadVoices() {
+    voices = speechSynthesis.getVoices().filter((v) => /^en[-_]/i.test(v.lang))
+      .sort((a, b) => voiceRank(b) - voiceRank(a));
+    renderVoicePickers();
+  }
   function say(text) {
     if (!("speechSynthesis" in window)) return;
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-US";
-    u.rate = 0.9;
+    const v = currentVoice();
+    if (v) u.voice = v;
+    u.lang = v ? v.lang : "en-US";
+    u.rate = +prefs.rate;
     speechSynthesis.speak(u);
   }
+  function savePrefs() {
+    try { localStorage.setItem("ear-voice", JSON.stringify(prefs)); } catch (e) { /* storage blocked */ }
+  }
+  function renderVoicePickers() {
+    document.querySelectorAll("[data-voice-picker]").forEach((host) => {
+      host.innerHTML = "";
+      if (!voices.length) return;
+      const pick = el("select", { onchange: () => { prefs.voice = pick.value; savePrefs(); } },
+        voices.map((v) => el("option", { value: v.name }, v.name.replace(/^Microsoft\s+/, "").replace(/\s*-\s*English.*$/, "") + " (" + v.lang + ")")));
+      pick.value = currentVoice().name;
+      const speed = el("select", { onchange: () => { prefs.rate = speed.value; savePrefs(); } },
+        el("option", { value: "0.75" }, "🐢 Pelan"), el("option", { value: "0.95" }, "Normal"), el("option", { value: "1.1" }, "🐇 Cepat"));
+      speed.value = prefs.rate;
+      host.append(el("span", {}, "🔊 Suara:"), pick, speed,
+        el("button", { onclick: () => say("Hi! Let's practise some English idioms together.") }, "▶ Tes"));
+    });
+  }
+  if ("speechSynthesis" in window) {
+    loadVoices();
+    speechSynthesis.addEventListener("voiceschanged", loadVoices);
+  }
+
+  /* ---------- microphone: speech recognition built into Chrome / Edge / Safari ---------- */
+
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let activeRec = null;
+
+  // Toggle listening on `btn`; onText(text, done) receives the live transcript.
+  function listen(btn, { continuous = false, onText }) {
+    if (activeRec) { activeRec.stop(); return; }
+    if (!Recognition) {
+      onText("", true, "Browser ini belum mendukung mikrofon. Pakai Google Chrome atau Microsoft Edge.");
+      return;
+    }
+    const rec = new Recognition();
+    rec.lang = "en-US";
+    rec.interimResults = true;
+    rec.continuous = continuous;
+    const label = btn.textContent;
+    let text = "", error = "";
+    rec.onresult = (e) => {
+      text = [...e.results].map((r) => r[0].transcript).join(" ").trim();
+      onText(text, false);
+    };
+    rec.onerror = (e) => {
+      error = e.error === "not-allowed" || e.error === "service-not-allowed"
+        ? "Mikrofon belum diizinkan. Klik ikon 🔒 / 🎤 di address bar lalu pilih Allow."
+        : e.error === "no-speech" ? "Tidak ada suara yang terdengar. Coba lagi dan bicara lebih dekat ke mikrofon."
+        : "Mikrofon error (" + e.error + "). Coba lagi.";
+    };
+    rec.onend = () => {
+      activeRec = null;
+      btn.classList.remove("rec");
+      btn.textContent = label;
+      onText(text, true, error);
+    };
+    activeRec = rec;
+    btn.classList.add("rec");
+    btn.textContent = "⏺ Mendengarkan… (ketuk untuk stop)";
+    rec.start();
+  }
+
+  const words = (s) => s.toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9' ]+/g, " ").split(/\s+/).filter(Boolean);
+
+  // Which target words were heard, in order (longest common subsequence).
+  function compare(target, heard) {
+    const t = words(target), h = words(heard);
+    const dp = Array.from({ length: t.length + 1 }, () => new Array(h.length + 1).fill(0));
+    for (let i = t.length - 1; i >= 0; i--)
+      for (let j = h.length - 1; j >= 0; j--)
+        dp[i][j] = t[i] === h[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    const hit = new Array(t.length).fill(false);
+    for (let i = 0, j = 0; i < t.length && j < h.length;) {
+      if (t[i] === h[j]) { hit[i] = true; i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) i++;
+      else j++;
+    }
+    return { t, hit, score: t.length ? Math.round(hit.filter(Boolean).length / t.length * 100) : 0 };
+  }
+
+  // 🎤 buttons with data-practice="sentence": say it, get a pronunciation score.
+  document.querySelectorAll("[data-practice]").forEach((btn) => {
+    const target = btn.dataset.practice;
+    const out = el("div", { class: "practice-result" });
+    out.hidden = true;
+    btn.parentNode.after(out);
+    btn.addEventListener("click", () => listen(btn, {
+      onText: (heard, done, error) => {
+        out.hidden = false;
+        if (error && !heard) { out.innerHTML = '<span class="bad">⚠️ ' + error + "</span>"; return; }
+        if (!done) { out.innerHTML = "🎧 <i>" + heard + "</i>"; return; }
+        const r = compare(target, heard);
+        const verdict = r.score >= 90 ? "🌟 Excellent!" : r.score >= 70 ? "👍 Good! Hampir sempurna." : "💪 Coba lagi, ucapkan lebih jelas.";
+        out.innerHTML = '<div class="score ' + (r.score >= 70 ? "ok" : "bad") + '">' + r.score + "% · " + verdict + "</div>" +
+          '<div class="heard">Terdengar: “' + heard + "”</div>" +
+          '<div class="target">' + r.t.map((w, i) => '<span class="' + (r.hit[i] ? "w-ok" : "w-miss") + '">' + w + "</span>").join(" ") + "</div>" +
+          (r.score < 100 ? '<div class="why">Kata merah belum tertangkap jelas. Dengarkan 🔊 lalu ulangi.</div>' : "");
+      }
+    }));
+  });
 
   function renderSpeak(item, key, n) {
     const model = el("div", { class: "model", html: item.model });
@@ -202,13 +326,26 @@
     const list = el("ul", { class: "checklist" });
     ta.value = state[key + ":v"] || "";
     ta.addEventListener("input", () => { state[key + ":v"] = ta.value; save(); });
+    const note = el("div", { class: "feedback" });
+    const mic = el("button", { class: "mic" }, "🎤 Jawab dengan suara");
+    mic.addEventListener("click", () => listen(mic, {
+      continuous: true,
+      onText: (heard, done, error) => {
+        if (heard) { ta.value = heard; state[key + ":v"] = heard; save(); }
+        note.className = "feedback" + (error ? " wrong" : "");
+        note.textContent = error || (done ? "" : "🎧 Mendengarkan… ketuk lagi kalau sudah selesai bicara.");
+        if (done && heard) runChecks(ta.value, item.checks, list);
+      }
+    }));
     return el("div", { class: "ex" },
       el("div", { class: "qtext" }, el("span", { class: "num" }, n + "."), item.q),
       el("div", { class: "fillrow" },
         el("button", { onclick: () => say(item.q) }, "🔊 Dengar"),
         el("button", { onclick: () => { model.hidden = !model.hidden; } }, "👀 Contoh jawaban"),
         el("button", { onclick: () => say(model.textContent) }, "🔊 Dengar contoh")),
-      model, ta,
+      model,
+      el("div", { class: "fillrow" }, mic), note,
+      ta,
       el("div", { class: "fillrow" }, el("button", { class: "primary", onclick: () => runChecks(ta.value, item.checks, list) }, "Cek jawaban")),
       list);
   }

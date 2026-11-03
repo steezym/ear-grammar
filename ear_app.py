@@ -12,9 +12,6 @@ from pathlib import Path
 import streamlit as st
 
 ROOT = Path(__file__).parent
-CSS = (ROOT / "assets" / "style.css").read_text(encoding="utf-8")
-JS = (ROOT / "assets" / "quiz.js").read_text(encoding="utf-8")
-TRACKS = json.loads((ROOT / "tracks.json").read_text(encoding="utf-8"))
 HOME = "🏠 Silabus"
 
 STYLE = """
@@ -85,7 +82,7 @@ def run(track_id, title, subtitle, folder):
 
 def tracks_html(current):
     items = []
-    for t in TRACKS:
+    for t in json.loads((ROOT / "tracks.json").read_text(encoding="utf-8")):
         label = f'{t["icon"]} {t["name"]}'
         if t["id"] == current:
             items.append(f'<span class="track here">{label}<small>DI SINI</small></span>')
@@ -130,9 +127,12 @@ def home(title, subtitle, syllabus, released, week_label, go):
 
 
 def embed(html):
-    """Inline the shared stylesheet and script so the page works inside an iframe."""
+    """Inline the shared stylesheet and script so the page works inside an iframe.
+    Files are read on every run so edits show up without restarting the app."""
+    css = (ROOT / "assets" / "style.css").read_text(encoding="utf-8")
+    js = (ROOT / "assets" / "quiz.js").read_text(encoding="utf-8")
     html = re.sub(r'<link rel="stylesheet" href="(?:\.\./)+assets/style\.css[^"]*">',
-                  lambda _: "<style>" + CSS + "</style>", html)
+                  lambda _: "<style>" + css + "</style>", html)
     html = re.sub(r'<script src="(?:\.\./)+assets/quiz\.js[^"]*"></script>',
-                  lambda _: "<script>" + JS + "</script>", html)
+                  lambda _: "<script>" + js + "</script>", html)
     return html.replace("<body>", '<body class="embed">', 1)
