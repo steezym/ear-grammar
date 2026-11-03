@@ -44,8 +44,14 @@ async def main(week):
     manifest = {}
     for text in texts_in(week / "index.html"):
         name = hashlib.sha1(text.encode("utf-8")).hexdigest()[:12] + ".mp3"
-        if not (out / name).exists():
-            await edge_tts.Communicate(text, VOICE, rate=RATE).save(str(out / name))
+        target = out / name
+        if not target.exists() or target.stat().st_size == 0:
+            tmp = target.with_suffix(".part")  # a failed download never leaves a broken .mp3 behind
+            await edge_tts.Communicate(text, VOICE, rate=RATE).save(str(tmp))
+            if tmp.stat().st_size == 0:
+                tmp.unlink()
+                sys.exit("No audio received for: " + text)
+            tmp.replace(target)
             print("made", name, "<-", text[:60])
         manifest[text] = name
     for old in out.glob("*.mp3"):  # drop audio for texts that no longer exist
