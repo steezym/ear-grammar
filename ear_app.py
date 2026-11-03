@@ -38,18 +38,21 @@ STYLE = """
   [class*="st-key-open-"] { background: #fff; border-color: #1E459F !important; box-shadow: 0 3px 0 #1E459F; }
   [class*="st-key-locked-"] { background: #F4EFE3; opacity: .72; }
   /* class picker as pills; selectors cover both older and newer Streamlit radio markup */
-  .st-key-kelas, .st-key-kelas [data-testid="stRadio"] { width: 100% !important; }
-  .st-key-kelas [role="radiogroup"] { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; }
-  .st-key-kelas [role="radiogroup"] > div:not([data-testid]) { display: contents; }
-  .st-key-kelas label:has(input[type="radio"]) { background: #fff; border: 1.5px solid #E1DCCA; border-radius: 999px;
+  .st-key-kelas-main, .st-key-kelas-main [data-testid="stRadio"] { width: 100% !important; }
+  .st-key-kelas-main [role="radiogroup"] { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; }
+  .st-key-kelas-main [role="radiogroup"] > div:not([data-testid]) { display: contents; }
+  .st-key-kelas-main label:has(input[type="radio"]) { background: #fff; border: 1.5px solid #E1DCCA; border-radius: 999px;
     padding: 6px 18px !important; margin: 0 !important; cursor: pointer; }
-  .st-key-kelas label:has(input[type="radio"]:checked) { background: #1E459F; border-color: #1E459F; }
-  .st-key-kelas label:has(input[type="radio"]:checked) p { color: #fff !important; }
-  .st-key-kelas label:has(input[type="radio"]) p { font-weight: 800; font-size: 16px; margin: 0; }
-  .st-key-kelas label div:has(+ [data-testid="stMarkdownContainer"]),
-  .st-key-kelas [role="radiogroup"] > label > div:first-child { display: none !important; }
+  .st-key-kelas-main label:has(input[type="radio"]:checked) { background: #1E459F; border-color: #1E459F; }
+  .st-key-kelas-main label:has(input[type="radio"]:checked) p { color: #fff !important; }
+  .st-key-kelas-main label:has(input[type="radio"]) p { font-weight: 800; font-size: 16px; margin: 0; }
+  .st-key-kelas-main label div:has(+ [data-testid="stMarkdownContainer"]),
+  .st-key-kelas-main [role="radiogroup"] > label > div:first-child { display: none !important; }
   .soon { text-align: center; color: #8a8576; font-size: 14px; margin: 4px 0 6px; }
   .soon span { display: inline-block; border: 1px dashed #c9c2ab; border-radius: 999px; padding: 2px 12px; margin: 2px; }
+  .soon.side { text-align: left; margin-top: -6px; }
+  .soon.side span { display: block; border: 0; padding: 3px 0 3px 30px; margin: 0; font-size: 15px; }
+  .st-key-kelas-side label p { font-weight: 800; }
 </style>
 """
 
@@ -83,13 +86,14 @@ def app():
     with st.sidebar:
         st.markdown("## 📚 EAR")
         st.caption("English Assistance Rote")
-        st.markdown(f"**{track['icon']} {track['name']}**")
-        page = st.radio("Menu", [HOME] + [week_label(n) for n in released], key=nav_key)
+        class_picker(active, soon, "side")
+        st.divider()
+        page = st.radio(f"Menu {track['icon']} {track['name']}", [HOME] + [week_label(n) for n in released], key=nav_key)
         st.divider()
         st.caption("Materi baru dibuka setiap minggu. Skor tersimpan di perangkat masing-masing.")
 
     if page == HOME:
-        class_picker(active, soon)
+        class_picker(active, soon, "main")
         home(track, syllabus, released, week_label, go)
     else:
         n = int(page.split()[1])
@@ -97,15 +101,20 @@ def app():
         st.button("← Kembali ke silabus", on_click=go, args=(HOME,))
 
 
-def class_picker(active, soon):
+def class_picker(active, soon, where):
+    """Class selector; the sidebar ("side") and home page ("main") copies stay in sync via st.session_state.kelas."""
+    key = "kelas-" + where
+    st.session_state[key] = st.session_state.kelas
+
     def changed():
+        st.session_state.kelas = st.session_state[key]
         st.query_params["kelas"] = st.session_state.kelas
 
-    st.radio("Pilih kelas", list(active), key="kelas", horizontal=True, on_change=changed,
+    st.radio("Kelas", list(active), key=key, horizontal=where == "main", on_change=changed,
              format_func=lambda cid: f"{active[cid]['icon']} {active[cid]['name']}",
-             label_visibility="collapsed")
+             label_visibility="collapsed" if where == "main" else "visible")
     if soon:
-        st.markdown('<div class="soon">' + "".join(
+        st.markdown(f'<div class="soon {where}">' + "".join(
             f"<span>{t['icon']} {t['name']} · coming soon</span>" for t in soon) + "</div>",
             unsafe_allow_html=True)
 
