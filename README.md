@@ -61,3 +61,15 @@ Lalu buka http://localhost:8501
 4. Isi *App URL*, misalnya `ear-grammar` (jadi `https://ear-grammar.streamlit.app`), lalu **Deploy**.
 
 Halaman HTML juga tetap bisa dipublish lewat GitHub Pages (Settings → Pages → branch `main`, folder `/ (root)`).
+
+## Audio speaking (🔊)
+
+Semua suara di halaman speaking memakai satu suara neural (en-US Jenny) dari file MP3, jadi sama di semua HP.
+Setelah membuat atau mengubah teks di `speaking/week-XX/index.html`, buat ulang audionya:
+
+```bash
+pip install edge-tts
+python tools/make_audio.py speaking/week-02
+```
+
+Lalu commit folder `speaking/week-XX/audio/` bersama halamannya.

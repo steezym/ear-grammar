@@ -5,6 +5,7 @@ Each class has a syllabus.json and one folder per released week
 The week pages are static HTML; this module inlines the shared CSS/JS and
 renders them inside Streamlit.
 """
+import base64
 import json
 import re
 from pathlib import Path
@@ -76,7 +77,7 @@ def run(track_id, title, subtitle, folder):
         home(title, subtitle, syllabus, released, week_label, go)
     else:
         n = int(page.split()[1])
-        st.iframe(embed((released[n] / "index.html").read_text(encoding="utf-8")), height=900)
+        st.iframe(embed(released[n]), height=900)
         st.button("← Kembali ke silabus", on_click=go, args=(HOME,))
 
 
@@ -126,13 +127,24 @@ def home(title, subtitle, syllabus, released, week_label, go):
                 st.button("🔒 Belum dibuka", key=f"go-{n}", disabled=True, use_container_width=True)
 
 
-def embed(html):
-    """Inline the shared stylesheet and script so the page works inside an iframe.
+def embed(week):
+    """Inline the shared stylesheet, script and 🔊 audio so the week page works inside an iframe.
     Files are read on every run so edits show up without restarting the app."""
+    html = (week / "index.html").read_text(encoding="utf-8")
     css = (ROOT / "assets" / "style.css").read_text(encoding="utf-8")
     js = (ROOT / "assets" / "quiz.js").read_text(encoding="utf-8")
     html = re.sub(r'<link rel="stylesheet" href="(?:\.\./)+assets/style\.css[^"]*">',
                   lambda _: "<style>" + css + "</style>", html)
     html = re.sub(r'<script src="(?:\.\./)+assets/quiz\.js[^"]*"></script>',
-                  lambda _: "<script>" + js + "</script>", html)
+                  lambda _: audio_script(week) + "<script>" + js + "</script>", html)
     return html.replace("<body>", '<body class="embed">', 1)
+
+
+def audio_script(week):
+    """window.EAR_AUDIO = {text: data URI} built from week/audio/manifest.json (see tools/make_audio.py)."""
+    manifest = week / "audio" / "manifest.json"
+    if not manifest.exists():
+        return ""
+    urls = {text: "data:audio/mpeg;base64," + base64.b64encode((week / "audio" / name).read_bytes()).decode()
+            for text, name in json.loads(manifest.read_text(encoding="utf-8")).items()}
+    return "<script>window.EAR_AUDIO = " + json.dumps(urls) + ";</script>"

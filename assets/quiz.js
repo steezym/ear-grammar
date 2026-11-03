@@ -186,98 +186,103 @@
       list);
   }
 
-  /* ---------- voice: text-to-speech with the most natural English voice on the device ---------- */
+  /* ---------- voice: one neural voice from pre-made MP3s, device voice only as fallback ---------- */
 
-  const prefs = { voice: "", rate: "0.95" };
-  try { Object.assign(prefs, JSON.parse(localStorage.getItem("ear-voice")) || {}); } catch (e) { /* storage blocked */ }
-  let voices = [];
+  const normText = (s) => s.replace(/\s+/g, " ").trim();
+  const audioUrls = {};  // text -> URL (data: URI inside Streamlit, audio/xxx.mp3 on GitHub Pages)
+  if (window.EAR_AUDIO) Object.assign(audioUrls, window.EAR_AUDIO);
+  else fetch("audio/manifest.json").then((r) => (r.ok ? r.json() : {})).then((m) => {
+    for (const k in m) audioUrls[k] = "audio/" + m[k];
+  }).catch(() => { /* no audio for this page */ });
+  const player = new Audio();
 
-  function voiceRank(v) {
-    let s = 0;
-    if (/natural|neural|online/i.test(v.name)) s += 40;  // Edge / Windows neural voices
-    if (/google/i.test(v.name)) s += 25;                 // Chrome / Android voices
-    if (/aria|jenny|ava|samantha|allison|emma|guy|andrew/i.test(v.name)) s += 10;
-    if (/en[-_]US/i.test(v.lang)) s += 8; else if (/en[-_]GB/i.test(v.lang)) s += 4;
-    return s;
+  function deviceVoice() {
+    const rank = (v) => (/natural|neural|online/i.test(v.name) ? 40 : 0) + (/google/i.test(v.name) ? 25 : 0) +
+      (/en[-_]US/i.test(v.lang) ? 8 : 0);
+    return speechSynthesis.getVoices().filter((v) => /^en[-_]/i.test(v.lang)).sort((a, b) => rank(b) - rank(a))[0];
   }
-  function currentVoice() {
-    return voices.find((v) => v.name === prefs.voice) || voices[0];
-  }
-  function loadVoices() {
-    voices = speechSynthesis.getVoices().filter((v) => /^en[-_]/i.test(v.lang))
-      .sort((a, b) => voiceRank(b) - voiceRank(a));
-    renderVoicePickers();
+  function stopVoice() {
+    player.pause();
+    if ("speechSynthesis" in window) speechSynthesis.cancel();
   }
   function say(text) {
+    stopVoice();
+    const url = audioUrls[normText(text)];
+    if (url) { player.src = url; player.play().catch(() => fallbackSay(text)); }
+    else fallbackSay(text);
+  }
+  function fallbackSay(text) {
     if (!("speechSynthesis" in window)) return;
-    speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    const v = currentVoice();
+    const v = deviceVoice();
     if (v) u.voice = v;
     u.lang = v ? v.lang : "en-US";
-    u.rate = +prefs.rate;
+    u.rate = 0.95;
     speechSynthesis.speak(u);
-  }
-  function savePrefs() {
-    try { localStorage.setItem("ear-voice", JSON.stringify(prefs)); } catch (e) { /* storage blocked */ }
-  }
-  function renderVoicePickers() {
-    document.querySelectorAll("[data-voice-picker]").forEach((host) => {
-      host.innerHTML = "";
-      if (!voices.length) return;
-      const pick = el("select", { onchange: () => { prefs.voice = pick.value; savePrefs(); } },
-        voices.map((v) => el("option", { value: v.name }, v.name.replace(/^Microsoft\s+/, "").replace(/\s*-\s*English.*$/, "") + " (" + v.lang + ")")));
-      pick.value = currentVoice().name;
-      const speed = el("select", { onchange: () => { prefs.rate = speed.value; savePrefs(); } },
-        el("option", { value: "0.75" }, "🐢 Pelan"), el("option", { value: "0.95" }, "Normal"), el("option", { value: "1.1" }, "🐇 Cepat"));
-      speed.value = prefs.rate;
-      host.append(el("span", {}, "🔊 Suara:"), pick, speed,
-        el("button", { onclick: () => say("Hi! Let's practise some English idioms together.") }, "▶ Tes"));
-    });
-  }
-  if ("speechSynthesis" in window) {
-    loadVoices();
-    speechSynthesis.addEventListener("voiceschanged", loadVoices);
   }
 
   /* ---------- microphone: speech recognition built into Chrome / Edge / Safari ---------- */
 
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let activeRec = null;
+  let active = null;  // { rec, btn, next }
 
-  // Toggle listening on `btn`; onText(text, done) receives the live transcript.
-  function listen(btn, { continuous = false, onText }) {
-    if (activeRec) { activeRec.stop(); return; }
-    if (!Recognition) {
-      onText("", true, "Browser ini belum mendukung mikrofon. Pakai Google Chrome atau Microsoft Edge.");
+  // Some browsers (Chrome on Android) repeat earlier words in later results; keep only the longest version.
+  function joinResults(results) {
+    const parts = [];
+    for (const r of results) {
+      const t = r[0].transcript.trim();
+      if (!t) continue;
+      const last = parts[parts.length - 1];
+      if (last && t.toLowerCase().startsWith(last.toLowerCase())) parts[parts.length - 1] = t;
+      else if (!(last && last.toLowerCase().endsWith(t.toLowerCase()))) parts.push(t);
+    }
+    return parts.join(" ");
+  }
+
+  const MIC_ERRORS = {
+    "not-allowed": "Mikrofon belum diizinkan. Ketuk ikon 🔒 di address bar → Microphone → Allow, lalu muat ulang halaman.",
+    "service-not-allowed": "Mikrofon belum diizinkan oleh browser. Pakai Google Chrome atau Microsoft Edge.",
+    "no-speech": "Tidak ada suara yang terdengar. Ketuk 🎤 lalu langsung bicara, lebih dekat ke mikrofon.",
+    "audio-capture": "Mikrofon tidak ditemukan. Pastikan mikrofon terpasang dan tidak dipakai aplikasi lain.",
+    "network": "Pengenalan suara butuh internet. Cek koneksi lalu coba lagi."
+  };
+
+  // Toggle listening on `btn`; onText(text, done, error) receives the live transcript.
+  function listen(btn, opts) {
+    if (active) {
+      if (active.btn !== btn) active.next = () => listen(btn, opts);  // switch to this button after the old one stops
+      active.rec.stop();
       return;
     }
+    if (!Recognition) {
+      opts.onText("", true, "Browser ini belum mendukung mikrofon. Pakai Google Chrome atau Microsoft Edge.");
+      return;
+    }
+    stopVoice();  // don't record our own 🔊 audio
     const rec = new Recognition();
     rec.lang = "en-US";
     rec.interimResults = true;
-    rec.continuous = continuous;
+    rec.continuous = !!opts.continuous;
+    rec.maxAlternatives = 1;
     const label = btn.textContent;
     let text = "", error = "";
-    rec.onresult = (e) => {
-      text = [...e.results].map((r) => r[0].transcript).join(" ").trim();
-      onText(text, false);
-    };
-    rec.onerror = (e) => {
-      error = e.error === "not-allowed" || e.error === "service-not-allowed"
-        ? "Mikrofon belum diizinkan. Klik ikon 🔒 / 🎤 di address bar lalu pilih Allow."
-        : e.error === "no-speech" ? "Tidak ada suara yang terdengar. Coba lagi dan bicara lebih dekat ke mikrofon."
-        : "Mikrofon error (" + e.error + "). Coba lagi.";
-    };
+    rec.onresult = (e) => { text = joinResults(e.results); opts.onText(text, false); };
+    rec.onerror = (e) => { if (e.error !== "aborted") error = MIC_ERRORS[e.error] || "Mikrofon error (" + e.error + "). Coba lagi."; };
     rec.onend = () => {
-      activeRec = null;
+      const next = active && active.next;
+      active = null;
       btn.classList.remove("rec");
       btn.textContent = label;
-      onText(text, true, error);
+      opts.onText(text, true, text ? "" : error);
+      if (next) next();
     };
-    activeRec = rec;
+    try { rec.start(); } catch (err) {
+      opts.onText("", true, "Mikrofon belum bisa dimulai. Tunggu sebentar lalu coba lagi.");
+      return;
+    }
+    active = { rec, btn, next: null };
     btn.classList.add("rec");
-    btn.textContent = "⏺ Mendengarkan… (ketuk untuk stop)";
-    rec.start();
+    btn.textContent = label.length <= 3 ? "⏹" : "⏹ Selesai bicara";
   }
 
   const words = (s) => s.toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9' ]+/g, " ").split(/\s+/).filter(Boolean);
@@ -308,11 +313,11 @@
       onText: (heard, done, error) => {
         out.hidden = false;
         if (error && !heard) { out.innerHTML = '<span class="bad">⚠️ ' + error + "</span>"; return; }
-        if (!done) { out.innerHTML = "🎧 <i>" + heard + "</i>"; return; }
+        if (!done) { out.textContent = "🎧 " + heard; return; }
         const r = compare(target, heard);
         const verdict = r.score >= 90 ? "🌟 Excellent!" : r.score >= 70 ? "👍 Good! Hampir sempurna." : "💪 Coba lagi, ucapkan lebih jelas.";
         out.innerHTML = '<div class="score ' + (r.score >= 70 ? "ok" : "bad") + '">' + r.score + "% · " + verdict + "</div>" +
-          '<div class="heard">Terdengar: “' + heard + "”</div>" +
+          '<div class="heard">Terdengar: “' + heard.replace(/[<>&]/g, "") + "”</div>" +
           '<div class="target">' + r.t.map((w, i) => '<span class="' + (r.hit[i] ? "w-ok" : "w-miss") + '">' + w + "</span>").join(" ") + "</div>" +
           (r.score < 100 ? '<div class="why">Kata merah belum tertangkap jelas. Dengarkan 🔊 lalu ulangi.</div>' : "");
       }
