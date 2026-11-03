@@ -9,6 +9,7 @@
  *   fix    : { q (wrong sentence), answer: [accepted corrected sentences..], why }
  *   order  : { words: [..], answer: [accepted sentences..], why }
  *   pattern: { q (prompt), pattern (hint), test: RegExp the sentence must match, model, why }
+ *   speak  : { q, model (may contain <mark>), checks } — ungraded, with text-to-speech buttons
  *   write  : { q, count, checks: [[label, test, isMistake?]..] }
  *   (test is a RegExp or a function(text) -> bool; isMistake=true means a hit is bad)
  */
@@ -185,6 +186,36 @@
       list);
   }
 
+  function say(text) {
+    if (!("speechSynthesis" in window)) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = 0.9;
+    speechSynthesis.speak(u);
+  }
+
+  function renderSpeak(item, key, n) {
+    const model = el("div", { class: "model", html: item.model });
+    model.hidden = true;
+    const ta = el("textarea", { placeholder: "Latihan ucapkan dulu, lalu tulis jawabanmu di sini…" });
+    const list = el("ul", { class: "checklist" });
+    ta.value = state[key + ":v"] || "";
+    ta.addEventListener("input", () => { state[key + ":v"] = ta.value; save(); });
+    return el("div", { class: "ex" },
+      el("div", { class: "qtext" }, el("span", { class: "num" }, n + "."), item.q),
+      el("div", { class: "fillrow" },
+        el("button", { onclick: () => say(item.q) }, "🔊 Dengar"),
+        el("button", { onclick: () => { model.hidden = !model.hidden; } }, "👀 Contoh jawaban"),
+        el("button", { onclick: () => say(model.textContent) }, "🔊 Dengar contoh")),
+      model, ta,
+      el("div", { class: "fillrow" }, el("button", { class: "primary", onclick: () => runChecks(ta.value, item.checks, list) }, "Cek jawaban")),
+      list);
+  }
+
+  // Any element with data-say="text" reads that text aloud.
+  document.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", () => say(b.dataset.say)));
+
   /* ---------- mount ---------- */
 
   W.sections.forEach((sec) => {
@@ -199,6 +230,7 @@
       else if (item.type === "fix") node = renderInput(item, key, n, "tulis kalimat yang benar…");
       else if (item.type === "order") node = renderOrder(item, key, n);
       else if (item.type === "pattern") node = renderPattern(item, key, n);
+      else if (item.type === "speak") node = renderSpeak(item, key, n);
       else if (item.type === "write") node = renderWrite(item, key);
       if (["choice", "fill", "fix", "order", "pattern"].includes(item.type)) graded.push(key);
       host.append(node);

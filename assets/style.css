@@ -175,3 +175,14 @@ footer { text-align: center; color: var(--muted); font-size: 14px; margin-top: 2
 /* ---------- embedded in the Streamlit app ---------- */
 body.embed .topbar a.home,
 body.embed [data-standalone] { display: none; }
+
+/* ---------- idiom cards (speaking) ---------- */
+.idioms { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.idiom { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--bg); }
+.idiom .name { display: flex; align-items: center; gap: 8px; font-size: 19px; font-weight: 800; color: var(--navy); }
+.idiom .name button { margin-left: auto; padding: 3px 9px; font-size: 14px; }
+.idiom .mean { color: var(--red); font-weight: 700; margin: 2px 0; }
+.idiom .id { color: var(--muted); font-size: 14px; font-style: italic; }
+.idiom .ex { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 8px; font-size: 15px; }
+.roleplay { background: var(--yellow); border-radius: 12px; padding: 12px 14px; }
+.roleplay ol { margin: 6px 0 0; padding-left: 20px; }

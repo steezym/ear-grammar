@@ -1,0 +1,6 @@
+[
+  {"id": "grammar", "name": "Grammar", "icon": "📘", "url": "https://ear-grammar.streamlit.app"},
+  {"id": "speaking", "name": "Speaking", "icon": "🗣️", "url": ""},
+  {"id": "writing", "name": "Writing", "icon": "✍️", "url": "", "soon": true},
+  {"id": "listening", "name": "Listening", "icon": "🎧", "url": "", "soon": true}
+]

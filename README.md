@@ -1,6 +1,14 @@
-# EAR Grammar
+# EAR – English Assistance Rote
 
-Materi dan latihan interaktif **English Assistance Rote – Grammar** (25 weeks).
+Materi dan latihan interaktif EAR. Saat ini ada dua kelas, masing-masing dengan aplikasi Streamlit sendiri:
+
+| Kelas | Main file | Folder materi | Link |
+|---|---|---|---|
+| 📘 Grammar | `streamlit_app.py` | `./week-XX/` | https://ear-grammar.streamlit.app |
+| 🗣️ Speaking (101 American English Idioms) | `speaking_app.py` | `speaking/week-XX/` | (isi setelah deploy) |
+
+Writing dan Listening: coming soon (atur di `tracks.json`).
+
 Semua halaman selalu memakai palet EAR (navy #1E459F, merah #CF2A2A, kuning #FABD32, beige #E1DCCA), juga di HP yang memakai mode gelap.
 Setiap minggu punya satu halaman web berisi materi, latihan yang langsung dicek (skor tersimpan di HP masing-masing), latihan sentence building, poster PNG, dan PDF worksheet.
 
@@ -12,7 +20,11 @@ Referensi utama: *Grammar for IELTS* (Collins), plus materi tambahan.
 index.html            daftar semua week
 assets/style.css      tampilan bersama
 assets/quiz.js        mesin quiz bersama (choice, fill, fix, order, pattern, write)
-streamlit_app.py      aplikasi Streamlit: halaman silabus + week yang sudah dibuka
+ear_app.py            kode Streamlit bersama (silabus, week terkunci, daftar kelas)
+streamlit_app.py      aplikasi Grammar
+speaking_app.py       aplikasi Speaking
+speaking/             silabus + materi speaking (week-XX/)
+tracks.json           daftar kelas EAR dan link-nya
 syllabus.json         isi silabus 25 week (week tanpa folder tampil terkunci)
 .streamlit/config.toml  tema warna Streamlit
 week-01/index.html    materi + soal Week 1
