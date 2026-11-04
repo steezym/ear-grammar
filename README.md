@@ -20,8 +20,7 @@ Referensi utama: *Grammar for IELTS* (Collins), plus materi tambahan.
 index.html            daftar semua week
 assets/style.css      tampilan bersama
 assets/quiz.js        mesin quiz bersama (choice, fill, fix, order, pattern, write)
-ear_app.py            kode aplikasi Streamlit (pilihan kelas, silabus, week terkunci)
-streamlit_app.py      file utama Streamlit
+streamlit_app.py      seluruh kode aplikasi Streamlit (pilihan kelas, silabus, sesi, week terkunci)
 speaking/             silabus + materi speaking (week-XX/)
 tracks.json           daftar kelas EAR (aktif / coming soon)
 syllabus.json         isi silabus 25 week (week tanpa folder tampil terkunci)
