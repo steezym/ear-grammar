@@ -10,7 +10,7 @@ Materi dan latihan interaktif EAR dalam **satu aplikasi Streamlit**: https://ear
 Writing dan Listening: coming soon (atur di `tracks.json`).
 
 Semua halaman selalu memakai palet EAR (navy #1E459F, merah #CF2A2A, kuning #FABD32, beige #E1DCCA), juga di HP yang memakai mode gelap.
-Setiap minggu punya satu halaman web berisi materi, latihan yang langsung dicek (skor tersimpan di HP masing-masing), latihan sentence building, poster PNG, dan PDF worksheet.
+Setiap week punya 3 sesi (Selasa, Rabu, Jumat): `week-XX/` = Sesi 1, `week-XX/sesi-2/` dan `week-XX/sesi-3/`. Setiap sesi berisi materi, latihan yang langsung dicek (skor tersimpan di HP masing-masing), latihan sentence building, poster PNG, dan PDF worksheet.
 
 Referensi utama: *Grammar for IELTS* (Collins), plus materi tambahan.
 
@@ -27,21 +27,14 @@ tracks.json           daftar kelas EAR (aktif / coming soon)
 syllabus.json         isi silabus 25 week (week tanpa folder tampil terkunci)
 .streamlit/config.toml  tema warna Streamlit
 week-01/index.html    materi + soal Week 1
-week-01/week1-poster.png
 week-01/Week1_My_Hobbies_Materi.pdf
-posters/week-01.html  sumber poster (dirender jadi PNG)
 ```
 
 ## Menambah week baru
 
 1. Copy folder `week-01` menjadi `week-02`, lalu ganti isi materi dan array `window.WEEK.sections` (ganti juga `id: "week-02"`).
 2. Di `index.html`, set `live: true` pada week tersebut.
-3. Buat poster: copy `posters/week-01.html`, edit, lalu render:
-
-   ```bash
-   "C:/Program Files/Google/Chrome/Application/chrome.exe" --headless --hide-scrollbars --virtual-time-budget=4000 --window-size=1254,1254 --screenshot="week-02/week2-poster.png" "file:///C:/.../posters/week-02.html"
-   ```
-
+3. Poster dibuat terpisah di folder lokal `EAR/Poster` (tidak masuk ke web/GitHub).
 4. `git add -A`, `git commit`, `git push`. Streamlit akan otomatis menampilkan week baru dalam 1–2 menit.
 
 ## Preview lokal

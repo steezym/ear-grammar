@@ -15,6 +15,7 @@ import streamlit as st
 
 ROOT = Path(__file__).parent
 HOME = "🏠 Silabus"
+DAYS = ["Selasa", "Rabu", "Jumat"]  # meetings per week; a syllabus entry can override with "days"
 
 STYLE = """
 <style>
@@ -72,13 +73,10 @@ def app():
     track = active[st.session_state.kelas]
     folder = ROOT / track["folder"]
     syllabus = json.loads((folder / "syllabus.json").read_text(encoding="utf-8"))
-    released = {int(f.name[-2:]): f for f in sorted(folder.glob("week-[0-9][0-9]"))
-                if (f / "index.html").exists()}
+    days = {w["week"]: w.get("days", DAYS) for w in syllabus}
+    released = sessions_of(folder)
+    pages = {session_label(n, k, days[n]): page for n, ss in released.items() for k, page in ss.items()}
     nav_key = "nav-" + track["id"]
-
-    def week_label(n):
-        topic = next((w["topic"] for w in syllabus if w["week"] == n), "")
-        return f"Week {n} · {topic}"
 
     def go(label):
         st.session_state[nav_key] = label
@@ -88,16 +86,15 @@ def app():
         st.caption("English Assistance Rote")
         class_picker(active, soon, "side")
         st.divider()
-        page = st.radio(f"Menu {track['icon']} {track['name']}", [HOME] + [week_label(n) for n in released], key=nav_key)
+        page = st.radio(f"Menu {track['icon']} {track['name']}", [HOME] + list(pages), key=nav_key)
         st.divider()
         st.caption("Materi baru dibuka setiap minggu. Skor tersimpan di perangkat masing-masing.")
 
     if page == HOME:
         class_picker(active, soon, "main")
-        home(track, syllabus, released, week_label, go)
+        home(track, syllabus, released, days, go)
     else:
-        n = int(page.split()[1])
-        st.iframe(embed(released[n]), height=900)
+        st.iframe(embed(pages[page]), height=900)
         st.button("← Kembali ke silabus", on_click=go, args=(HOME,))
 
 
@@ -119,7 +116,23 @@ def class_picker(active, soon, where):
             unsafe_allow_html=True)
 
 
-def home(track, syllabus, released, week_label, go):
+def sessions_of(folder):
+    """{week: {session: page folder}}. week-XX/ holds session 1; week-XX/sesi-2/, sesi-3/, ... the others."""
+    weeks = {}
+    for week in sorted(folder.glob("week-[0-9][0-9]")):
+        found = {k: page for k, page in [(1, week)] + [(k, week / f"sesi-{k}") for k in range(2, 6)]
+                 if (page / "index.html").exists()}
+        if found:
+            weeks[int(week.name[-2:])] = found
+    return weeks
+
+
+def session_label(n, k, days):
+    day = days[k - 1] if k <= len(days) else ""
+    return f"Week {n} · Sesi {k}" + (f" ({day})" if day else "")
+
+
+def home(track, syllabus, released, days, go):
     st.markdown(f"""
 <div class="ear-hero">
   <span class="tag">{len(syllabus)} Weeks</span>
@@ -145,14 +158,20 @@ def home(track, syllabus, released, week_label, go):
 <div class="wk-act">{w['activity']}</div>
 """, unsafe_allow_html=True)
             if is_open:
-                st.button("Buka materi →", key="go-" + key, type="primary", use_container_width=True,
-                          on_click=go, args=(week_label(n),))
+                latest = max(released[n])
+                for k, day in enumerate(days[n], start=1):
+                    if k in released[n]:
+                        st.button(f"Sesi {k} · {day} →", key=f"go-{key}-{k}", use_container_width=True,
+                                  type="primary" if k == latest else "secondary",
+                                  on_click=go, args=(session_label(n, k, days[n]),))
+                    else:
+                        st.button(f"🔒 Sesi {k} · {day}", key=f"go-{key}-{k}", disabled=True, use_container_width=True)
             else:
                 st.button("🔒 Belum dibuka", key="go-" + key, disabled=True, use_container_width=True)
 
 
 def embed(week):
-    """Inline the shared stylesheet, script and 🔊 audio so the week page works inside an iframe.
+    """Inline the shared stylesheet, script and 🔊 audio so a session page (its folder) works inside an iframe.
     Files are read on every run so edits show up without restarting the app."""
     html = (week / "index.html").read_text(encoding="utf-8")
     css = (ROOT / "assets" / "style.css").read_text(encoding="utf-8")
