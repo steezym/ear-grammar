@@ -1,0 +1,56 @@
+{
+  "week": 2, "sesi": 2,
+  "title": "The Body Has Many Uses (2)",
+  "subtitle": "Body idioms for taking risks and dealing with annoying people.",
+  "emojis": "🦒 💇 🎒 🦵",
+  "idioms": [
+    {"emoji": "🦒", "idiom": "stick one's neck out", "mean": "take a risk to help someone or say what you think", "id": "berani mengambil risiko / pasang badan",
+     "ex": "Rina **stuck her neck out** and told the teacher the truth to defend me."},
+    {"emoji": "💇", "idiom": "get in someone's hair", "mean": "annoy someone by always being around them", "id": "mengganggu, bikin kesal",
+     "ex": "My little brother keeps **getting in my hair** while I'm studying."},
+    {"emoji": "🎒", "idiom": "get off someone's back", "mean": "stop criticising or pressuring someone", "id": "berhenti merecoki / menekan",
+     "ex": "I'll clean my room later. Please **get off my back**!"},
+    {"emoji": "🦵", "idiom": "not have a leg to stand on", "mean": "have no proof or good reason for what you say", "id": "tidak punya bukti / alasan kuat",
+     "ex": "He says I broke the window, but he **doesn't have a leg to stand on**. There's no proof."}
+  ],
+  "tip": "Ganti kata ganti sesuai orangnya: *stick **my** neck out*, *get in **her** hair*, *get off **his** back*. **Get off my back** terdengar kesal, jadi pakai dengan teman, bukan dengan guru.",
+  "meaning": [
+    {"q": "stick one's neck out = ___", "options": ["look over a wall", "take a risk to help or speak up", "be very tall"], "answer": 1, "why": "Berani mengambil risiko."},
+    {"q": "get in someone's hair = ___", "options": ["cut someone's hair", "annoy someone", "play with someone"], "answer": 1, "why": "Mengganggu, bikin kesal."},
+    {"q": "get off someone's back = ___", "options": ["stop pressuring someone", "carry someone", "stand up"], "answer": 0, "why": "Berhenti merecoki."},
+    {"q": "not have a leg to stand on = ___", "options": ["be very tired", "have a broken leg", "have no proof or good reason"], "answer": 2, "why": "Tidak punya bukti / alasan kuat."}
+  ],
+  "dialogue": [
+    {"q": "A: Mum keeps asking about my grades every hour. B: Tell her nicely to ___ for a while.", "options": ["get off your back", "stick your neck out", "get in your hair"], "answer": 0, "why": "Minta berhenti menekan → get off your back."},
+    {"q": "A: Why are you studying in the library? B: My cousins are visiting and they keep ___.", "options": ["sticking their necks out", "getting in my hair", "having a leg to stand on"], "answer": 1, "why": "Mengganggu terus → getting in my hair."},
+    {"q": "A: Nobody else defended Budi in the meeting. B: I know. Only Sari ___ for him.", "options": ["got off his back", "stuck her neck out", "got in his hair"], "answer": 1, "why": "Berani membela → stuck her neck out."},
+    {"q": "A: The shop says I didn't pay, but I have the receipt! B: Then they ___.", "options": ["don't have a leg to stand on", "stick their neck out", "get off your back"], "answer": 0, "why": "Tidak punya bukti → don't have a leg to stand on."}
+  ],
+  "correct": [
+    {"q": "\"Thanks for sticking your neck out for me in front of the boss.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: dia berani membela."},
+    {"q": "\"My hairdresser got in my hair, so my haircut looks great.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: get in someone's hair = mengganggu, bukan memotong rambut."},
+    {"q": "\"You have no evidence, so you don't have a leg to stand on.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: tanpa bukti."},
+    {"q": "\"I love my coach because he always gets off my back.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Kurang tepat: get off my back dipakai saat menyuruh orang berhenti menekan, bukan untuk memuji."}
+  ],
+  "speak": [
+    {"q": "Have you ever stuck your neck out for a friend? What happened?",
+     "model": "Yes, I <mark>stuck my neck out</mark> for my best friend last semester. Some classmates blamed her for a broken projector, so I told the teacher she wasn't there.",
+     "regex": "\\bst(ick|icks|uck|icking)\\s+(my|your|his|her|our|their|one's)\\s+necks?\\s+out\\b", "label": "stick one's neck out"},
+    {"q": "Who or what gets in your hair at home?",
+     "model": "My younger sister really <mark>gets in my hair</mark>. She always borrows my things without asking and plays loud music when I want to study.",
+     "regex": "\\bget(s|ting)?\\s+in\\s+(my|your|his|her|our|their|someone's)\\s+hair\\b", "label": "get in someone's hair"},
+    {"q": "When do you want people to get off your back?",
+     "model": "I want my parents to <mark>get off my back</mark> when they ask about my homework every five minutes. I always finish it, so they don't need to worry.",
+     "regex": "\\bget(s|ting)?\\s+off\\s+(my|your|his|her|our|their|someone's)\\s+back\\b", "label": "get off someone's back"}
+  ],
+  "roleplay": {
+    "situation": "Kamu dituduh merusak laptop kelas, padahal bukan kamu pelakunya.",
+    "steps": [
+      "**Student A (teman sekelas):** terus menuduh dan mengganggu (*keeps getting in my hair*).",
+      "**Student B (kamu):** minta dia berhenti menekan (*get off my back*) dan bilang dia tidak punya bukti (*you don't have a leg to stand on*).",
+      "**Student C / guru (opsional):** tanya siapa yang berani bersaksi.",
+      "**Student B:** ceritakan teman yang membela kamu (*stuck his/her neck out*)."
+    ],
+    "target": "Target: percakapan 1–2 menit, semua 4 idiom terpakai. Bonus: pakai 1 idiom dari Sesi 1."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "week": 2, "sesi": 3,
+  "title": "The Body Has Many Uses (3)",
+  "subtitle": "Body idioms for big talk, angry answers, high prices, and jokes.",
+  "emojis": "📢 😠 👃 😉",
+  "idioms": [
+    {"emoji": "📢", "idiom": "shoot off one's mouth", "mean": "talk loudly and carelessly, often boasting", "id": "asal ngomong / omong besar",
+     "ex": "He's always **shooting off his mouth** about how rich his family is."},
+    {"emoji": "😠", "idiom": "jump down someone's throat", "mean": "suddenly answer someone very angrily", "id": "membentak tiba-tiba",
+     "ex": "I only asked a question! You don't have to **jump down my throat**."},
+    {"emoji": "👃", "idiom": "pay through the nose", "mean": "pay far too much for something", "id": "bayar terlalu mahal",
+     "ex": "We **paid through the nose** for drinks at the airport."},
+    {"emoji": "😉", "idiom": "tongue-in-cheek", "mean": "said as a joke, not seriously", "id": "bercanda, tidak serius",
+     "ex": "His review calling the movie a masterpiece was **tongue-in-cheek**. He actually hated it."}
+  ],
+  "tip": "**Tongue-in-cheek** adalah adjective/adverb: *a tongue-in-cheek comment*, *he said it tongue-in-cheek*. **Pay through the nose** sering dipakai dengan *for*: *pay through the nose for tickets*.",
+  "meaning": [
+    {"q": "shoot off one's mouth = ___", "options": ["talk carelessly or boast", "eat very fast", "stay silent"], "answer": 0, "why": "Asal ngomong / omong besar."},
+    {"q": "jump down someone's throat = ___", "options": ["help someone", "answer someone very angrily", "sing loudly"], "answer": 1, "why": "Membentak tiba-tiba."},
+    {"q": "pay through the nose = ___", "options": ["get a discount", "pay too much", "pay with cash"], "answer": 1, "why": "Bayar terlalu mahal."},
+    {"q": "tongue-in-cheek = ___", "options": ["serious and angry", "said as a joke", "hard to pronounce"], "answer": 1, "why": "Bercanda, tidak serius."}
+  ],
+  "dialogue": [
+    {"q": "A: This small coffee cost 80,000 rupiah! B: Wow, you really ___.", "options": ["paid through the nose", "shot off your mouth", "were tongue-in-cheek"], "answer": 0, "why": "Terlalu mahal → paid through the nose."},
+    {"q": "A: Is the homework due today? B: Of course! Don't you ever listen?! A: Hey, no need to ___!", "options": ["pay through the nose", "jump down my throat", "be tongue-in-cheek"], "answer": 1, "why": "Dijawab dengan marah → jump down my throat."},
+    {"q": "A: Did Dimas really say he can beat a pro gamer? B: Yes, but he's always ___.", "options": ["shooting off his mouth", "jumping down my throat", "paying through the nose"], "answer": 0, "why": "Omong besar → shooting off his mouth."},
+    {"q": "A: She said our team is 'the best in the universe'. B: Relax, it was ___. We lost every match!", "options": ["through the nose", "tongue-in-cheek", "down my throat"], "answer": 1, "why": "Hanya bercanda → tongue-in-cheek."}
+  ],
+  "correct": [
+    {"q": "\"We got the tickets for free. We really paid through the nose!\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: gratis berarti tidak bayar mahal."},
+    {"q": "\"Sorry I jumped down your throat. I was tired and stressed.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: minta maaf karena membentak."},
+    {"q": "\"His tongue-in-cheek speech made everyone laugh.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: pidatonya bercanda."},
+    {"q": "\"She shot off her mouth because she was too shy to speak.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: shoot off one's mouth = banyak omong, bukan pemalu."}
+  ],
+  "speak": [
+    {"q": "Have you ever paid through the nose for something? Was it worth it?",
+     "model": "Yes, I <mark>paid through the nose</mark> for concert tickets last year. They were really expensive, but the show was amazing, so I think it was worth it.",
+     "regex": "\\bpa(y|ys|id|ying)\\s+through\\s+the\\s+nose\\b", "label": "pay through the nose"},
+    {"q": "What do you do when someone jumps down your throat?",
+     "model": "When someone <mark>jumps down my throat</mark>, I try to stay calm. Usually they are just stressed, so I wait a little and then talk to them again.",
+     "regex": "\\bjump(s|ed|ing)?\\s+down\\s+(my|your|his|her|our|their|someone's)\\s+throat\\b", "label": "jump down someone's throat"},
+    {"q": "Do you know someone who often shoots off their mouth?",
+     "model": "Yes, one of my classmates often <mark>shoots off his mouth</mark>. He says he can win every game, but most of the time he loses, so we just laugh.",
+     "regex": "\\bshoot(s|ing)?\\s+off\\s+(my|your|his|her|our|their|one's)\\s+mouths?\\b|\\bshot\\s+off\\s+(my|your|his|her|our|their)\\s+mouths?\\b", "label": "shoot off one's mouth"}
+  ],
+  "roleplay": {
+    "situation": "Kamu dan temanmu baru pulang dari liburan singkat dan menceritakannya ke teman lain.",
+    "steps": [
+      "**Student A:** ceritakan harga hotel / makanan yang sangat mahal (*we paid through the nose*).",
+      "**Student B:** bercanda bahwa liburannya 'paling murah sedunia' lalu jelaskan itu bercanda (*tongue-in-cheek*).",
+      "**Student A:** ceritakan teman seperjalanan yang suka omong besar (*shooting off his/her mouth*).",
+      "**Student B:** ceritakan saat teman itu tiba-tiba membentak (*jumped down my throat*) dan bagaimana kalian berbaikan."
+    ],
+    "target": "Target: percakapan 1–2 menit, semua 4 idiom terpakai. Bonus: pakai 2 idiom dari Sesi 1–2."
+  }
+}

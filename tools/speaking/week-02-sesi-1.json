@@ -1,0 +1,56 @@
+{
+  "week": 2, "sesi": 1,
+  "title": "The Body Has Many Uses (1)",
+  "subtitle": "Body idioms for jokes, plans, and hurrying up.",
+  "emojis": "😜 🎵 👍 🏃",
+  "idioms": [
+    {"emoji": "😜", "idiom": "pull someone's leg", "mean": "joke with someone by telling them something untrue", "id": "bercanda / mengerjai seseorang",
+     "ex": "Don't worry, I'm just **pulling your leg**. The exam isn't today!"},
+    {"emoji": "🎵", "idiom": "play it by ear", "mean": "decide what to do as things happen, without a plan", "id": "lihat situasi nanti saja",
+     "ex": "We don't have a plan for Saturday yet. Let's just **play it by ear**."},
+    {"emoji": "👍", "idiom": "all thumbs", "mean": "clumsy with your hands", "id": "kikuk, tidak cekatan",
+     "ex": "Can you fix my bike chain? I'm **all thumbs** with tools."},
+    {"emoji": "🏃", "idiom": "shake a leg", "mean": "hurry up", "id": "cepat! buruan!",
+     "ex": "**Shake a leg**! The bus leaves in five minutes."}
+  ],
+  "tip": "**pull someone's leg** biasanya dipakai dalam bentuk continuous: *I'm just pulling your leg* (aku cuma bercanda). **Shake a leg** adalah perintah santai, jangan dipakai ke guru atau atasan.",
+  "meaning": [
+    {"q": "pull someone's leg = ___", "options": ["hurt someone's leg", "joke with someone", "help someone walk"], "answer": 1, "why": "Bercanda dengan cerita yang tidak benar."},
+    {"q": "play it by ear = ___", "options": ["play music", "decide later as things happen", "listen carefully"], "answer": 1, "why": "Tidak membuat rencana, lihat nanti."},
+    {"q": "all thumbs = ___", "options": ["very clumsy with your hands", "very good at games", "giving a thumbs-up"], "answer": 0, "why": "Kikuk, tidak cekatan."},
+    {"q": "shake a leg = ___", "options": ["dance", "hurry up", "relax"], "answer": 1, "why": "Cepat! Buruan!"}
+  ],
+  "dialogue": [
+    {"q": "A: Our teacher said we have a test every day this week! B: Really?! A: No, I'm just ___.", "options": ["pulling your leg", "all thumbs", "playing it by ear"], "answer": 0, "why": "Hanya bercanda → pulling your leg."},
+    {"q": "A: What time should we leave for the beach? B: I'm not sure. Let's ___.", "options": ["shake a leg", "play it by ear", "pull your leg"], "answer": 1, "why": "Belum ada rencana pasti → play it by ear."},
+    {"q": "A: Can you sew this button for me? B: Sorry, I'm ___. Ask my mum.", "options": ["all thumbs", "shaking a leg", "pulling your leg"], "answer": 0, "why": "Tidak cekatan → all thumbs."},
+    {"q": "A: The movie starts in ten minutes! ___! B: Okay, okay, I'm coming!", "options": ["Play it by ear", "Shake a leg", "All thumbs"], "answer": 1, "why": "Menyuruh cepat → Shake a leg!"}
+  ],
+  "correct": [
+    {"q": "\"I'm all thumbs, so I'll be careful with your phone.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: dia kikuk, jadi berhati-hati."},
+    {"q": "\"My leg hurts because my friend pulled my leg.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: pull someone's leg = bercanda, bukan menarik kaki."},
+    {"q": "\"We booked everything weeks ago, so we'll play it by ear.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: kalau semua sudah direncanakan, bukan play it by ear."},
+    {"q": "\"Shake a leg, everyone! The train is leaving!\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: menyuruh semua orang cepat."}
+  ],
+  "speak": [
+    {"q": "Do you like to plan your weekends, or do you play it by ear?",
+     "model": "I usually <mark>play it by ear</mark>. I don't like strict plans, so on Saturday morning I just call my friends and we decide what to do together.",
+     "regex": "\\bplay(s|ed|ing)?\\s+it\\s+by\\s+ear\\b", "label": "play it by ear"},
+    {"q": "Are you good with your hands, or are you all thumbs?",
+     "model": "Honestly, I'm <mark>all thumbs</mark>. I tried to fix my fan last week and I broke it even more, so my dad had to help me.",
+     "regex": "\\ball\\s+thumbs\\b", "label": "all thumbs"},
+    {"q": "Tell me about a time someone pulled your leg.",
+     "model": "Last April my brother <mark>pulled my leg</mark>. He said our school was closed for a week, and I believed him until my friends texted me!",
+     "regex": "\\bpull(s|ed|ing)?\\s+(my|your|his|her|our|their|someone's)\\s+leg\\b", "label": "pull someone's leg"}
+  ],
+  "roleplay": {
+    "situation": "Kamu dan temanmu sedang bersiap pergi ke acara ulang tahun teman, tapi kalian sudah terlambat.",
+    "steps": [
+      "**Student A:** suruh temanmu cepat (*shake a leg*).",
+      "**Student B:** jawab bahwa kamu kesulitan mengikat dasi / memasang jam tangan (*all thumbs*).",
+      "**Student A:** bercanda bahwa acaranya sudah selesai, lalu akui kamu bercanda (*pulling your leg*).",
+      "**Both:** putuskan mau pulang jam berapa (*let's play it by ear*)."
+    ],
+    "target": "Target: percakapan 1–2 menit, semua 4 idiom terpakai."
+  }
+}
