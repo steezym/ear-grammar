@@ -1,11 +1,11 @@
 # EAR – English Assistance Rote
 
-Materi dan latihan interaktif EAR dalam **satu aplikasi Streamlit**: https://ear-grammar.streamlit.app
+Materi dan latihan interaktif EAR dalam **satu aplikasi Streamlit**: https://ear-learning.streamlit.app
 
 | Kelas | Folder materi | Link langsung |
 |---|---|---|
-| 📘 Grammar | `./week-XX/` | https://ear-grammar.streamlit.app/?kelas=grammar |
-| 🗣️ Speaking (101 American English Idioms) | `speaking/week-XX/` | https://ear-grammar.streamlit.app/?kelas=speaking |
+| 📘 Grammar | `./week-XX/` | https://ear-learning.streamlit.app/?kelas=grammar |
+| 🗣️ Speaking (101 American English Idioms) | `speaking/week-XX/` | https://ear-learning.streamlit.app/?kelas=speaking |
 
 Writing dan Listening: coming soon (atur di `tracks.json`).
 
@@ -49,7 +49,7 @@ Lalu buka http://localhost:8501
 1. Push repo ini ke GitHub.
 2. Buka https://share.streamlit.io, login dengan akun GitHub.
 3. **Create app** → *Deploy a public app from GitHub* → pilih repo `ear-grammar`, branch `main`, main file `streamlit_app.py`.
-4. Isi *App URL*, misalnya `ear-grammar` (jadi `https://ear-grammar.streamlit.app`), lalu **Deploy**.
+4. Isi *App URL*, misalnya `ear-grammar` (jadi `https://ear-learning.streamlit.app`), lalu **Deploy**.
 
 Halaman HTML juga tetap bisa dipublish lewat GitHub Pages (Settings → Pages → branch `main`, folder `/ (root)`).
 

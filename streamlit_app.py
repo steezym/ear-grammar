@@ -1,4 +1,4 @@
-"""EAR – English Assistance Rote (https://ear-grammar.streamlit.app): one Streamlit app for every class.
+"""EAR – English Assistance Rote (https://ear-learning.streamlit.app): one Streamlit app for every class.
 
 tracks.json lists the classes. An active class has a folder with syllabus.json and one folder
 per released week: week-XX/ is session 1, week-XX/sesi-2/ and sesi-3/ the next meetings.
