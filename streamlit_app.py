@@ -156,9 +156,9 @@ def home(track, syllabus, released, days, go):
             st.markdown(f"""
 <div class="wk-num">WEEK {n}{badge}</div>
 <div class="wk-topic">{w['topic']}</div>
-<div class="wk-focus">{w['focus'] or '&nbsp;'}</div>
+""" + (f"""<div class="wk-focus">{w['focus']}</div>
 <div class="wk-act">{w['activity']}</div>
-""", unsafe_allow_html=True)
+""" if w["focus"] or w["activity"] else ""), unsafe_allow_html=True)
             if is_open:
                 latest = max(released[n])
                 for k, day in enumerate(days[n], start=1):

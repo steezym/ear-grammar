@@ -23,7 +23,8 @@ assets/quiz.js        mesin quiz bersama (choice, fill, fix, order, pattern, wri
 streamlit_app.py      seluruh kode aplikasi Streamlit (pilihan kelas, silabus, sesi, week terkunci)
 speaking/             silabus + materi speaking (week-XX/)
 tracks.json           daftar kelas EAR (aktif / coming soon)
-syllabus.json         isi silabus 25 week (week tanpa folder tampil terkunci)
+syllabus.json         isi silabus 25 week (week tanpa folder tampil terkunci; Week 3+ = "Materi menyusul")
+syllabus-plan.json    arsip rencana silabus awal (tidak dipakai web)
 .streamlit/config.toml  tema warna Streamlit
 week-01/index.html    materi + soal Week 1
 week-01/Week1_My_Hobbies_Materi.pdf
