@@ -1,0 +1,52 @@
+{
+  "week": 3, "sesi": 2,
+  "title": "That's Not Nice (2)",
+  "subtitle": "Idioms for being betrayed, abandoned, and underestimated.",
+  "emojis": "🛶 🏜️ 📉",
+  "idioms": [
+    {"emoji": "🛶", "idiom": "sell someone down the river", "mean": "betray someone who trusts you", "id": "mengkhianati",
+     "ex": "I told him my secret plan, and he **sold me down the river** to the boss."},
+    {"emoji": "🏜️", "idiom": "leave someone high and dry", "mean": "leave someone without help when they need it", "id": "menelantarkan saat butuh bantuan",
+     "ex": "My group members didn't come, and they **left me high and dry** with the whole presentation."},
+    {"emoji": "📉", "idiom": "sell someone short", "mean": "think someone is less good or able than they really are", "id": "meremehkan",
+     "ex": "Don't **sell yourself short**. You can win this competition!"}
+  ],
+  "tip": "**sell yourself short** sangat sering dipakai untuk menyemangati: *Don't sell yourself short!* (jangan meremehkan dirimu). Bentuk lampau: *sold*, *left*.",
+  "meaning": [
+    {"q": "sell someone down the river = ___", "options": ["take someone on a boat trip", "betray someone", "sell something cheap"], "answer": 1, "why": "Mengkhianati orang yang percaya padamu."},
+    {"q": "leave someone high and dry = ___", "options": ["leave someone without help", "dry someone's clothes", "put someone in a high place"], "answer": 0, "why": "Meninggalkan saat dia butuh bantuan."},
+    {"q": "sell someone short = ___", "options": ["sell someone a short shirt", "underestimate someone", "pay someone less"], "answer": 1, "why": "Meremehkan kemampuan seseorang."}
+  ],
+  "dialogue": [
+    {"q": "A: I trusted Dani with our plan, but he told everything to the other team! B: Wow, he really ___.", "options": ["sold you down the river", "sold you short", "left you high"], "answer": 0, "why": "Pengkhianatan → sold you down the river."},
+    {"q": "A: The driver took my money and drove away. I was alone in the middle of nowhere! B: He ___!", "options": ["sold you short", "left you high and dry", "sold you down the river"], "answer": 1, "why": "Ditinggal tanpa bantuan → left you high and dry."},
+    {"q": "A: I'm not smart enough to apply for that scholarship. B: Don't ___! Your grades are great.", "options": ["sell yourself short", "leave yourself dry", "sell yourself down the river"], "answer": 0, "why": "Meremehkan diri sendiri → sell yourself short."}
+  ],
+  "correct": [
+    {"q": "\"My best friend sold me down the river by helping me study.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: membantu bukan mengkhianati."},
+    {"q": "\"The band cancelled an hour before the wedding and left us high and dry.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: ditinggal saat butuh."},
+    {"q": "\"Everyone sold her short, but she became the top student.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: orang meremehkan, ternyata dia hebat."},
+    {"q": "\"He left me high and dry by driving me home after the party.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: mengantar pulang itu membantu."}
+  ],
+  "speak": [
+    {"q": "Has anyone ever left you high and dry? What did you do?",
+     "model": "Yes, last semester my partner disappeared a day before our deadline. He <mark>left me high and dry</mark>, so I stayed up all night and finished the project alone.",
+     "regex": "\\b(leave|leaves|left|leaving)\\s+\\w+\\s+high\\s+and\\s+dry\\b", "label": "leave someone high and dry"},
+    {"q": "Do you sometimes sell yourself short? In what situations?",
+     "model": "Sometimes I <mark>sell myself short</mark> when I speak English. I think my English is bad, but my friends say I'm actually quite fluent.",
+     "regex": "\\bs(ell|ells|old|elling)\\s+\\w+\\s+short\\b", "label": "sell someone short"},
+    {"q": "How would you feel if a friend sold you down the river?",
+     "model": "I would feel terrible. If a close friend <mark>sold me down the river</mark>, I don't think I could trust them again.",
+     "regex": "\\bs(ell|ells|old|elling)\\s+\\w+\\s+down\\s+the\\s+river\\b", "label": "sell someone down the river"}
+  ],
+  "roleplay": {
+    "situation": "Kalian satu kelompok tugas. Satu anggota tidak datang di hari presentasi dan malah bilang ke dosen bahwa kalian yang malas.",
+    "steps": [
+      "**Student A:** ceritakan bahwa temanmu tidak datang (*He left us high and dry*).",
+      "**Student B:** tambahkan bahwa dia malah menyalahkan kalian ke dosen (*He sold us down the river*).",
+      "**Student A:** bilang kamu tidak yakin bisa presentasi sendiri.",
+      "**Student B:** semangati temanmu (*Don't sell yourself short!*) dan bagi tugasnya."
+    ],
+    "target": "Target: percakapan 1–2 menit, semua 3 idiom terpakai."
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "week": 3, "sesi": 3,
+  "title": "That's Not Nice (3)",
+  "subtitle": "Idioms for annoying people and secrets, plus a review of the week.",
+  "emojis": "🧱 🫘",
+  "idioms": [
+    {"emoji": "🧱", "idiom": "drive someone up a wall", "mean": "make someone very annoyed", "id": "bikin kesal banget",
+     "ex": "My neighbour's loud music every night **drives me up a wall**."},
+    {"emoji": "🫘", "idiom": "spill the beans", "mean": "tell a secret too early or by mistake", "id": "membocorkan rahasia",
+     "ex": "We planned a surprise party, but my little brother **spilled the beans**."}
+  ],
+  "tip": "**spill the beans** juga dipakai untuk minta cerita: *Come on, spill the beans!* (ayo, ceritain!). **drive someone up a wall** mirip dengan *drive someone crazy*.",
+  "meaning": [
+    {"q": "drive someone up a wall = ___", "options": ["drive a car up a hill", "make someone very annoyed", "build a wall"], "answer": 1, "why": "Membuat sangat kesal."},
+    {"q": "spill the beans = ___", "options": ["tell a secret", "cook beans", "make a mess in the kitchen"], "answer": 0, "why": "Membocorkan rahasia."},
+    {"q": "Review: string someone along = ___", "options": ["betray someone", "keep someone waiting with false promises", "underestimate someone"], "answer": 1, "why": "Memberi harapan palsu (Sesi 1)."},
+    {"q": "Review: sell someone short = ___", "options": ["underestimate someone", "tell a secret", "leave someone without help"], "answer": 0, "why": "Meremehkan (Sesi 2)."}
+  ],
+  "dialogue": [
+    {"q": "A: Why do you look so angry? B: My little sister keeps taking my clothes without asking. It ___!", "options": ["spills the beans", "drives me up a wall", "sells me short"], "answer": 1, "why": "Sangat kesal → drives me up a wall."},
+    {"q": "A: Who told Dina about the surprise party? B: Sorry, I ___. I thought she already knew!", "options": ["spilled the beans", "fed her a line", "left her high and dry"], "answer": 0, "why": "Membocorkan rahasia → spilled the beans."},
+    {"q": "A: He told me he was stuck in traffic, but I saw him at the mall! B: He ___.", "options": ["sold you short", "fed you a line", "spilled the beans"], "answer": 1, "why": "Review: alasan palsu → fed you a line."},
+    {"q": "A: My friend promised to drive me to the airport, then just didn't come. He ___. B: That's terrible!", "options": ["left me high and dry", "drove me up a wall", "spilled the beans"], "answer": 0, "why": "Review: ditinggal tanpa bantuan → left me high and dry."}
+  ],
+  "correct": [
+    {"q": "\"I can't tell you the ending of the film. I don't want to spill the beans.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: tidak mau membocorkan."},
+    {"q": "\"This quiet, peaceful café really drives me up a wall.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: tempat tenang dan nyaman tidak bikin kesal."},
+    {"q": "\"I spilled the beans on my shirt, so everyone knows the secret.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: idiom ini tentang rahasia, bukan menumpahkan kacang ke baju."},
+    {"q": "\"The ad promising free iPhones was a snow job.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar (review): omong besar untuk menipu."}
+  ],
+  "speak": [
+    {"q": "What drives you up a wall?",
+     "model": "People who chew loudly <mark>drive me up a wall</mark>. Slow Wi-Fi during an online meeting also <mark>drives me up a wall</mark>.",
+     "regex": "\\b(drive|drives|drove|driving|driven)\\s+\\w+\\s+up\\s+(a|the)\\s+wall\\b", "label": "drive someone up a wall"},
+    {"q": "Have you ever spilled the beans by accident?",
+     "model": "Yes, I once <mark>spilled the beans</mark> about my friend's birthday surprise. I said \"see you at the party!\" in front of her. Everyone was so angry with me!",
+     "regex": "\\bspill(s|ed|ing)?\\s+the\\s+beans\\b|\\bspilt\\s+the\\s+beans\\b", "label": "spill the beans"},
+    {"q": "Tell a short story with two idioms from this week.",
+     "model": "My friend promised to help me move house, but on the day he <mark>fed me a line</mark> about being sick. He <mark>left me high and dry</mark>, and I had to carry everything alone.",
+     "regex": "\\b(fed|feed\\w*)\\s+\\w+\\s+a\\s+line\\b|\\bhigh\\s+and\\s+dry\\b|\\bs(ell\\w*|old)\\s+\\w+\\s+(short|down\\s+the\\s+river)\\b|\\bsnow\\s+job\\b|\\bstr(ing|ung)\\w*\\s+\\w+\\s+along\\b", "label": "idiom from this week"}
+  ],
+  "roleplay": {
+    "situation": "Ada yang membocorkan rencana kejutan ulang tahun untuk dosen/atasan kalian.",
+    "steps": [
+      "**Student A:** marah karena rencana kejutannya bocor (*Someone spilled the beans!*).",
+      "**Student B:** bilang orang yang membocorkan itu memang selalu bikin kesal (*He drives me up a wall*).",
+      "**Student A:** curiga orang itu bohong saat ditanya (*He fed us a line*).",
+      "**Both:** pakai minimal 2 idiom lain dari minggu ini (string along, snow job, sell down the river, high and dry, sell short), lalu buat rencana baru."
+    ],
+    "target": "Target: percakapan 2 menit, minimal 5 idiom minggu ini terpakai."
+  }
+}

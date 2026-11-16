@@ -1,0 +1,52 @@
+{
+  "week": 3, "sesi": 1,
+  "title": "That's Not Nice (1)",
+  "subtitle": "Idioms for lies, tricks, and false promises.",
+  "emojis": "🎣 🪀 ❄️",
+  "idioms": [
+    {"emoji": "🎣", "idiom": "feed someone a line", "mean": "tell someone something untrue to trick them", "id": "membohongi / memberi alasan palsu",
+     "ex": "He said his phone was dead, but I think he was just **feeding me a line**."},
+    {"emoji": "🪀", "idiom": "string someone along", "mean": "keep someone waiting with false promises", "id": "memberi harapan palsu",
+     "ex": "She keeps saying \"maybe next week\". I think she's **stringing you along**."},
+    {"emoji": "❄️", "idiom": "snow job", "mean": "sweet talk or big lies used to fool someone", "id": "rayuan gombal / omong besar untuk menipu",
+     "ex": "The salesman's speech about the \"magic\" phone was a total **snow job**."}
+  ],
+  "tip": "**feed someone a line** dan **string someone along** sering dipakai dalam bentuk continuous: *He's feeding you a line*, *She's stringing him along*. **Snow job** adalah kata benda: *That was a snow job*.",
+  "meaning": [
+    {"q": "feed someone a line = ___", "options": ["give someone food", "tell someone a lie to trick them", "call someone"], "answer": 1, "why": "Membohongi dengan alasan palsu."},
+    {"q": "string someone along = ___", "options": ["keep someone waiting with false promises", "tie someone up", "walk with someone"], "answer": 0, "why": "Memberi harapan palsu terus-menerus."},
+    {"q": "snow job = ___", "options": ["a job in a cold country", "sweet talk used to fool someone", "cleaning the snow"], "answer": 1, "why": "Rayuan atau omong besar untuk menipu."}
+  ],
+  "dialogue": [
+    {"q": "A: He told me he can't come because his grandma is sick… again. B: That's the fifth time! He's ___.", "options": ["feeding you a line", "a snow job", "stringing the beans"], "answer": 0, "why": "Alasan palsu → feeding you a line."},
+    {"q": "A: My boss keeps promising me a raise \"next month\". B: It's been a year. He's ___.", "options": ["feeding you snow", "stringing you along", "a snow job"], "answer": 1, "why": "Janji palsu terus-menerus → stringing you along."},
+    {"q": "A: The seller said this cream makes you look 20 years younger in one day! B: Come on, that's a ___.", "options": ["line along", "snow job", "string job"], "answer": 1, "why": "Omong besar untuk menipu → snow job."}
+  ],
+  "correct": [
+    {"q": "\"I believed his story, but later I found out he was feeding me a line.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: ceritanya ternyata bohong."},
+    {"q": "\"My mum fed me a line of rice for lunch.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: feed someone a line = membohongi, bukan memberi makan."},
+    {"q": "\"She always keeps her promises, so she's stringing us along.\"", "options": ["Correct", "Not correct"], "answer": 1, "why": "Salah: kalau janjinya ditepati, itu bukan string someone along."},
+    {"q": "\"Don't believe his snow job about making millions in a week.\"", "options": ["Correct", "Not correct"], "answer": 0, "why": "Benar: omong besar untuk menipu."}
+  ],
+  "speak": [
+    {"q": "Has anyone ever fed you a line? What happened?",
+     "model": "Yes. A friend borrowed my motorbike and said he would return it in an hour. He came back at night and said the traffic was terrible, but I knew he was <mark>feeding me a line</mark>.",
+     "regex": "\\b(feed|feeds|fed|feeding)\\s+(me|you|him|her|us|them|someone)\\s+a\\s+line\\b", "label": "feed someone a line"},
+    {"q": "Why is it unkind to string someone along?",
+     "model": "Because the other person keeps hoping. If you <mark>string someone along</mark>, they waste their time waiting for something that will never happen. It's better to be honest.",
+     "regex": "\\bstr(ing|ings|inging|ung)\\s+\\w+\\s+along\\b", "label": "string someone along"},
+    {"q": "Have you ever seen an advertisement that was a snow job?",
+     "model": "Yes, I saw an online ad for a drink that promised I'd lose ten kilos in a week. It was a complete <mark>snow job</mark>, so I didn't buy it.",
+     "regex": "\\bsnow\\s+jobs?\\b", "label": "snow job"}
+  ],
+  "roleplay": {
+    "situation": "Temanmu sudah tiga kali membatalkan janji nongkrong dengan alasan yang aneh-aneh.",
+    "steps": [
+      "**Student A:** ceritakan alasan anehmu (\"my cat ate my phone charger…\").",
+      "**Student B:** bilang kamu rasa temanmu bohong (*You're feeding me a line*).",
+      "**Student A:** janjikan \"next week, for sure!\".",
+      "**Student B:** jawab bahwa dia terus memberi harapan palsu (*Stop stringing me along*) dan janjinya itu *a snow job*, lalu tentukan hari yang pasti."
+    ],
+    "target": "Target: percakapan 1–2 menit, semua 3 idiom terpakai."
+  }
+}
